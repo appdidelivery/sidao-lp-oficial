@@ -137,9 +137,13 @@ export default function AcademiaS12LandingPage() {
       {/* HEADER FIXO */}
       <header className="fixed top-0 w-full z-50 bg-[#090A0F]/80 backdrop-blur-md border-b border-zinc-800 transition-all">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
-          <div className="text-2xl font-black text-white tracking-tighter uppercase flex items-center gap-2">
-            <span className="text-amber-500">S12</span> ACADEMIA
-          </div>
+          <a href="#" className="flex items-center">
+            <img 
+              src="/logo-horizontal.jpeg" 
+              alt="Academia S12" 
+              className="h-12 md:h-16 w-auto object-contain" 
+            />
+          </a>
           <nav className="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-widest text-zinc-400">
             <a href="#metodo" className="hover:text-amber-500 transition-colors">O Método</a>
             <a href="#modulos" className="hover:text-amber-500 transition-colors">Módulos</a>
