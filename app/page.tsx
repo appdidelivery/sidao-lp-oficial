@@ -21,26 +21,27 @@ import Head from "next/head";
 const COURSE_PRICE = "97,14";
 const TOTAL_PRICE = "997,00";
 
+// AQUI FORAM ALTERADOS OS TEXTOS E ADICIONADOS OS LINKS DE PPL
 const TARGET_AUDIENCE = [
   {
     icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
     title: "Goleiros Amadores",
     desc: "Acabe com a insegurança debaixo da trave. Aprenda posicionamento, firmeza na pegada e evite lesões bobas na várzea ou society.",
-    link: "#grupo-amadores", // Aqui colocaremos o link do WhatsApp depois
+    link: "#grupo-amadores", 
     cta: "Entrar para a Lista VIP"
   },
   {
     icon: <Trophy className="w-8 h-8 text-amber-500" />,
     title: "Atletas de Base",
     desc: "Desenvolva o jogo com os pés e a leitura tática exigida pelos olheiros modernos. Blinde sua mente para passar nas peneiras.",
-    link: "#grupo-base", // Aqui colocaremos o link do WhatsApp depois
+    link: "#grupo-base", 
     cta: "Entrar para a Lista VIP"
   },
   {
     icon: <Brain className="w-8 h-8 text-amber-500" />,
-    title: "Preparador de Goleiros", // <- Alterado aqui!
+    title: "Preparador de Goleiros", // <- Alterado!
     desc: "Acesse uma metodologia validada na Série A. Aprenda a periodizar treinos que unem técnica, explosão e tomada de decisão.",
-    link: "#grupo-preparadores", // Aqui colocaremos o link do WhatsApp depois
+    link: "#grupo-preparadores", 
     cta: "Entrar para a Lista VIP"
   }
 ];
@@ -161,6 +162,7 @@ export default function AcademiaS12LandingPage() {
           transition={{ duration: 0.8 }}
           className="flex-1 space-y-6"
         >
+          {/* AQUI A ALTERAÇÃO DA CAMISA 12 */}
           <div className="inline-block border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
             A Metodologia Oficial do Camisa 12
           </div>
@@ -212,7 +214,7 @@ export default function AcademiaS12LandingPage() {
         </motion.div>
       </section>
 
-      {/* PARA QUEM É */}
+      {/* PARA QUEM É (AQUI ESTÃO OS CARDS COM BOTÕES) */}
       <section id="metodo" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <SectionHeading subtitle="A metodologia S12 foi desenhada para atuar nas três esferas principais da posição.">
@@ -227,20 +229,28 @@ export default function AcademiaS12LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-lg hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300 group"
+                className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-lg hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300 flex flex-col group"
               >
                 <div className="bg-[#090A0F] w-16 h-16 rounded-full flex items-center justify-center mb-6 border border-zinc-800 group-hover:border-amber-500/30 transition-colors">
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4 uppercase">{item.title}</h3>
-                <p className="text-zinc-400 leading-relaxed">{item.desc}</p>
+                <p className="text-zinc-400 leading-relaxed flex-grow">{item.desc}</p>
+                
+                {/* BOTÃO ADICIONADO AQUI */}
+                <a 
+                  href={item.link} 
+                  className="mt-8 block w-full text-center py-3 px-4 border border-amber-500/50 text-amber-400 font-bold uppercase text-sm rounded hover:bg-amber-500 hover:text-zinc-950 transition-colors duration-300"
+                >
+                  {item.cta}
+                </a>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* MÓDULOS (Estilo CriptoBlinders - Grid Escuro com Toggles) */}
+      {/* MÓDULOS */}
       <section id="modulos" className="py-24 relative overflow-hidden">
         <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[150px] rounded-full pointer-events-none -z-10" />
         
@@ -279,7 +289,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* REELS / CONTEÚDO DINÂMICO (Social Proof visual) */}
+      {/* REELS / CONTEÚDO DINÂMICO */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <SectionHeading subtitle="Metodologia direto do campo para a tela do seu celular.">
@@ -300,7 +310,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* STORYTELLING - QUEM É O MENTOR (Estilo Augusto Backes Who is) */}
+      {/* STORYTELLING - QUEM É O MENTOR */}
       <section id="historia" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <motion.div 
@@ -354,7 +364,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* OFERTA E CHECKOUT (Estilo Fênix/CriptoBlinders - Alto Contraste) */}
+      {/* OFERTA E CHECKOUT */}
       <section id="checkout" className="py-24 bg-black relative">
         {/* Textura de fundo */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
@@ -399,7 +409,7 @@ export default function AcademiaS12LandingPage() {
             </div>
           </div>
 
-          {/* Garantia Gigante (Estilo CriptoBlinders) */}
+          {/* Garantia Gigante */}
           <div className="mt-20 text-center space-y-6">
             <h2 className="text-7xl md:text-9xl font-black text-amber-500 uppercase tracking-tighter mix-blend-lighten" style={{ fontFamily: 'Impact', textShadow: '0 10px 30px rgba(245,158,11,0.2)' }}>
               7 DIAS
