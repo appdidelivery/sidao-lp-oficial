@@ -25,17 +25,23 @@ const TARGET_AUDIENCE = [
   {
     icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
     title: "Goleiros Amadores",
-    desc: "Acabe com a insegurança debaixo da trave. Aprenda posicionamento, firmeza na pegada e evite lesões bobas na várzea ou society."
+    desc: "Acabe com a insegurança debaixo da trave. Aprenda posicionamento, firmeza na pegada e evite lesões bobas na várzea ou society.",
+    link: "#grupo-amadores", // Aqui colocaremos o link do WhatsApp depois
+    cta: "Entrar para a Lista VIP"
   },
   {
     icon: <Trophy className="w-8 h-8 text-amber-500" />,
     title: "Atletas de Base",
-    desc: "Desenvolva o jogo com os pés e a leitura tática exigida pelos olheiros modernos. Blinde sua mente para passar nas peneiras."
+    desc: "Desenvolva o jogo com os pés e a leitura tática exigida pelos olheiros modernos. Blinde sua mente para passar nas peneiras.",
+    link: "#grupo-base", // Aqui colocaremos o link do WhatsApp depois
+    cta: "Entrar para a Lista VIP"
   },
   {
     icon: <Brain className="w-8 h-8 text-amber-500" />,
-    title: "Preparadores Físicos",
-    desc: "Acesse uma metodologia validada na Série A. Aprenda a periodizar treinos que unem técnica, explosão e tomada de decisão."
+    title: "Preparador de Goleiros", // <- Alterado aqui!
+    desc: "Acesse uma metodologia validada na Série A. Aprenda a periodizar treinos que unem técnica, explosão e tomada de decisão.",
+    link: "#grupo-preparadores", // Aqui colocaremos o link do WhatsApp depois
+    cta: "Entrar para a Lista VIP"
   }
 ];
 
@@ -156,7 +162,7 @@ export default function AcademiaS12LandingPage() {
           className="flex-1 space-y-6"
         >
           <div className="inline-block border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
-            A Metodologia Oficial de um Camisa 1
+            A Metodologia Oficial do Camisa 12
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase leading-[0.9]" style={{ fontFamily: 'Impact, sans-serif, system-ui' }}>
             DOMINE A GRANDE ÁREA. <br />
