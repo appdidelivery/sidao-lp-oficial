@@ -5,72 +5,62 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Play, 
   ShieldCheck, 
-  Target, 
   Brain, 
   Trophy, 
   ChevronDown, 
   CheckCircle2, 
   Lock, 
   Smartphone,
-  ChevronRight,
-  Star
+  ChevronRight
 } from "lucide-react";
 import Head from "next/head";
 
-// --- DADOS DO E-E-A-T E CONTEÚDO ---
-const COURSE_PRICE = "97,14";
-const TOTAL_PRICE = "997,00";
-
-// AQUI FORAM ALTERADOS OS TEXTOS E ADICIONADOS OS LINKS DE PPL
-const TARGET_AUDIENCE = [
+// --- DADOS DINÂMICOS DOS 3 CURSOS ---
+const COURSES_DATA = [
   {
-    icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
+    id: 0,
+    type: "Amador",
     title: "Goleiros Amadores",
+    icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
     desc: "Acabe com a insegurança debaixo da trave. Aprenda posicionamento, firmeza na pegada e evite lesões bobas na várzea ou society.",
-    link: "#grupo-amadores", 
-    cta: "Entrar para a Lista VIP"
+    price: "19,66",
+    totalPrice: "197,00",
+    checkoutLink: "https://pay.hotmart.com/LINK_AMADOR",
+    modules: [
+      { title: "A Base de Tudo: Posicionamento e Postura", lessons: ["A transição para o campo", "Biomecânica da queda e pegada em 'W'", "Encurtamento de ângulo e tempo de reação"] },
+      { title: "Segurança Total e Domínio", lessons: ["Tempo de bola aéreo básico", "Fechando o ângulo no 1x1", "Treino de impulsão"] },
+      { title: "A Mente Inabalável", lessons: ["Como lidar com a pressão de falhar na várzea", "Foco e concentração no jogo"] }
+    ]
   },
   {
-    icon: <Trophy className="w-8 h-8 text-amber-500" />,
+    id: 1,
+    type: "Base",
     title: "Atletas de Base",
+    icon: <Trophy className="w-8 h-8 text-amber-500" />,
     desc: "Desenvolva o jogo com os pés e a leitura tática exigida pelos olheiros modernos. Blinde sua mente para passar nas peneiras.",
-    link: "#grupo-base", 
-    cta: "Entrar para a Lista VIP"
+    price: "29,64",
+    totalPrice: "297,00",
+    checkoutLink: "https://pay.hotmart.com/LINK_BASE",
+    modules: [
+      { title: "O Goleiro Moderno: Jogo com os Pés", lessons: ["Domínio orientado sob pressão", "Passes de ruptura e construção de jogadas", "Atuando como líbero na cobertura preventiva"] },
+      { title: "Explosão e Alto Rendimento", lessons: ["Treino de força explosiva", "Impulsão, socos e encaixes no alto", "Agilidade debaixo da trave"] },
+      { title: "Mentalidade de Peneira", lessons: ["Rotinas de pré-jogo de um atleta de elite", "Como blindar a mente contra críticas e olheiros"] }
+    ]
   },
   {
+    id: 2,
+    type: "Preparador",
+    title: "Preparador de Goleiros",
     icon: <Brain className="w-8 h-8 text-amber-500" />,
-    title: "Preparador de Goleiros", // <- Alterado!
     desc: "Acesse uma metodologia validada na Série A. Aprenda a periodizar treinos que unem técnica, explosão e tomada de decisão.",
-    link: "#grupo-preparadores", 
-    cta: "Entrar para a Lista VIP"
-  }
-];
-
-const MODULES = [
-  {
-    id: "0",
-    title: "A Base de Tudo: Posicionamento e Postura",
-    lessons: ["A transição para o alto nível", "Biomecânica da queda e pegada em 'W'", "Encurtamento de ângulo e tempo de reação"]
-  },
-  {
-    id: "1",
-    title: "O Goleiro Moderno: Jogo com os Pés",
-    lessons: ["Domínio orientado sob pressão", "Passes de ruptura e construção de jogadas", "Atuando como líbero na cobertura preventiva"]
-  },
-  {
-    id: "2",
-    title: "O Dono da Área: Domínio Aéreo",
-    lessons: ["Tempo de bola em cruzamentos", "Impulsão, socos e encaixes no alto", "Treino de força explosiva"]
-  },
-  {
-    id: "3",
-    title: "Leitura Tática e Comunicação",
-    lessons: ["Liderança: A voz de comando do sistema defensivo", "Organização de barreiras", "Sinais não-verbais com a zaga"]
-  },
-  {
-    id: "4",
-    title: "A Mente Inabalável (Bônus E-E-A-T)",
-    lessons: ["Gestão do erro em tempo real", "Rotinas de pré-jogo de um atleta de elite", "Como blindar a mente contra críticas"]
+    price: "49,60",
+    totalPrice: "497,00",
+    checkoutLink: "https://pay.hotmart.com/LINK_PREPARADOR",
+    modules: [
+      { title: "Periodização Tática", lessons: ["Criando treinos cognitivos", "Gestão de carga e prevenção de lesão", "Como avaliar seus goleiros na prática"] },
+      { title: "O Método Diniz/Sidão", lessons: ["Como treinar o jogo com os pés no dia a dia", "Simulações de jogo real dentro da área", "Exercícios práticos documentados"] },
+      { title: "Liderança e Comunicação", lessons: ["A voz de comando do sistema defensivo", "Sinais não-verbais com a zaga", "Certificação de conclusão"] }
+    ]
   }
 ];
 
@@ -85,7 +75,7 @@ const FAQS = [
   },
   {
     question: "Como acesso as aulas?",
-    answer: "Assim que o pagamento for aprovado, você receberá um e-mail da Hotmart com seu login e senha para acessar a área de membros exclusiva de qualquer dispositivo."
+    answer: "Assim que o pagamento for aprovado, você receberá um e-mail com seu login e senha para acessar a área de membros exclusiva de qualquer dispositivo."
   },
   {
     question: "E se eu não gostar?",
@@ -112,29 +102,19 @@ const ButtonCTA = ({ href = "#checkout", text = "Garantir Minha Vaga", className
 // --- COMPONENTE PRINCIPAL ---
 export default function AcademiaS12LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  // Schema Markup para SEO e E-E-A-T
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "Academia S12 - O Método Definitivo para Goleiros",
-    "description": "Treinamento online de técnica, jogo com os pés e blindagem mental com o ex-goleiro profissional Sidão.",
-    "provider": {
-      "@type": "Person",
-      "name": "Sidão",
-      "jobTitle": "Ex-Goleiro Profissional e Mentor"
-    }
-  };
+  
+  // ESTADO QUE GUARDA QUAL CURSO FOI CLICADO (0 = Amador, 1 = Base, 2 = Preparador)
+  const [activeCourse, setActiveCourse] = useState(0);
+  const currentCourse = COURSES_DATA[activeCourse];
 
   return (
     <div className="min-h-screen bg-[#090A0F] text-zinc-300 font-sans selection:bg-amber-500 selection:text-black overflow-x-hidden">
       <Head>
         <title>Academia S12 | Método Sidão para Goleiros</title>
         <meta name="description" content="Aprenda técnica, jogo com os pés e blindagem mental com quem viveu a pressão dos maiores clubes do Brasil." />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
       </Head>
 
-      {/* HEADER FIXO */}
+      {/* HEADER FIXO - MANTIDO INTACTO */}
       <header className="fixed top-0 w-full z-50 bg-[#090A0F]/80 backdrop-blur-md border-b border-zinc-800 transition-all">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
           <a href="#" className="flex items-center">
@@ -150,23 +130,16 @@ export default function AcademiaS12LandingPage() {
             <a href="#historia" className="hover:text-amber-500 transition-colors">O Mentor</a>
           </nav>
           <div className="hidden sm:block">
-            <ButtonCTA text="Matricule-se" className="py-2 px-6 text-sm" />
+            <ButtonCTA href="#cursos" text="Lista VIP" className="py-2 px-6 text-sm" />
           </div>
         </div>
       </header>
 
-      {/* HERO SECTION (Dobra 1) */}
+      {/* HERO SECTION - MANTIDA INTACTA */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 z-10">
-        {/* Efeito Glow Background */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex-1 space-y-6"
-        >
-          {/* AQUI A ALTERAÇÃO DA CAMISA 12 */}
+        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="flex-1 space-y-6">
           <div className="inline-block border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
             A Metodologia Oficial do Camisa 12
           </div>
@@ -179,7 +152,7 @@ export default function AcademiaS12LandingPage() {
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
-            <ButtonCTA href="#checkout" className="w-full sm:w-auto text-lg py-5 px-10 animate-pulse" />
+            <ButtonCTA href="#cursos" text="ESCOLHER MEU CURSO" className="w-full sm:w-auto text-lg py-5 px-10 animate-pulse" />
             <span className="text-sm text-zinc-500 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-500" /> Compra 100% Segura
             </span>
@@ -188,7 +161,6 @@ export default function AcademiaS12LandingPage() {
           <div className="pt-8 border-t border-zinc-800/50 mt-8 flex flex-col gap-3">
             <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Vivência Real de Alto Nível:</span>
             <div className="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-               {/* Placeholders para escudos. Na prática usar <img> */}
                <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">SPFC</div>
                <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">BFR</div>
                <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">CRVG</div>
@@ -197,14 +169,8 @@ export default function AcademiaS12LandingPage() {
           </div>
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex-1 w-full relative"
-        >
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex-1 w-full relative">
           <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl group cursor-pointer">
-            {/* Imagem Placeholder - Usar foto épica do Sidão */}
             <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Treino Sidão" className="object-cover w-full h-full opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="w-20 h-20 bg-amber-500/20 backdrop-blur-md border border-amber-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -212,69 +178,63 @@ export default function AcademiaS12LandingPage() {
               </div>
               <p className="mt-4 font-bold uppercase tracking-wider text-sm text-white">Assista ao Trailer</p>
             </div>
-            {/* Grunge Overlay effect */}
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
           </div>
         </motion.div>
       </section>
 
-      {/* PARA QUEM É (AQUI ESTÃO OS CARDS COM BOTÕES) */}
-      <section id="metodo" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
+      {/* SELEÇÃO DINÂMICA DE CURSOS - AGREGADO O CLIQUE DINÂMICO AQUI */}
+      <section id="cursos" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <SectionHeading subtitle="A metodologia S12 foi desenhada para atuar nas três esferas principais da posição.">
-            O ALVO DO TREINAMENTO
+          <SectionHeading subtitle="A metodologia S12 foi desenhada para atuar nas três esferas principais da posição. Selecione seu perfil.">
+            QUAL É O SEU ALVO?
           </SectionHeading>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TARGET_AUDIENCE.map((item, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-pointer">
+            {COURSES_DATA.map((item, idx) => (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-lg hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300 flex flex-col group"
+                onClick={() => {
+                  setActiveCourse(idx);
+                  document.getElementById("modulos")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className={`p-8 rounded-lg transition-all duration-300 flex flex-col group ${activeCourse === idx ? 'bg-zinc-900 border-2 border-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.1)]' : 'bg-zinc-900/50 border border-zinc-800 hover:border-amber-500/50'}`}
               >
-                <div className="bg-[#090A0F] w-16 h-16 rounded-full flex items-center justify-center mb-6 border border-zinc-800 group-hover:border-amber-500/30 transition-colors">
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 border transition-colors ${activeCourse === idx ? 'bg-amber-500/10 border-amber-500' : 'bg-[#090A0F] border-zinc-800 group-hover:border-amber-500/30'}`}>
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4 uppercase">{item.title}</h3>
                 <p className="text-zinc-400 leading-relaxed flex-grow">{item.desc}</p>
                 
-                {/* BOTÃO ADICIONADO AQUI */}
-                <a 
-                  href={item.link} 
-                  className="mt-8 block w-full text-center py-3 px-4 border border-amber-500/50 text-amber-400 font-bold uppercase text-sm rounded hover:bg-amber-500 hover:text-zinc-950 transition-colors duration-300"
-                >
-                  {item.cta}
-                </a>
+                <div className={`mt-8 block w-full text-center py-3 px-4 font-bold uppercase text-sm rounded transition-colors duration-300 ${activeCourse === idx ? 'bg-amber-500 text-zinc-950' : 'border border-amber-500/50 text-amber-400 hover:bg-amber-500 hover:text-zinc-950'}`}>
+                  {activeCourse === idx ? 'Módulos Selecionados' : 'Ver Detalhes do Curso'}
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* MÓDULOS */}
-      <section id="modulos" className="py-24 relative overflow-hidden">
+      {/* MÓDULOS - AGORA SÃO DINÂMICOS CONFORME O CLIQUE */}
+      <section id="modulos" className="py-24 relative overflow-hidden bg-[#0c0d13]">
         <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[150px] rounded-full pointer-events-none -z-10" />
         
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <SectionHeading>
+          <SectionHeading subtitle={`Conteúdo Exclusivo focado em: ${currentCourse.title}`}>
             O QUE VOCÊ VAI RECEBER
           </SectionHeading>
 
           <div className="space-y-4">
-            {MODULES.map((mod, idx) => (
+            {currentCourse.modules.map((mod, idx) => (
               <motion.div 
-                key={mod.id}
+                key={`${currentCourse.id}-${idx}`}
                 initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
                 className="bg-zinc-900/80 border border-zinc-800 rounded-sm overflow-hidden"
               >
-                <div className="p-4 md:p-6 flex items-center border-b border-zinc-800/50 bg-[#0c0d13]">
-                  <span className="text-amber-500 font-bold mr-4">MÓDULO {mod.id}</span>
+                <div className="p-4 md:p-6 flex items-center border-b border-zinc-800/50 bg-[#090A0F]">
+                  <span className="text-amber-500 font-bold mr-4">MÓDULO {idx + 1}</span>
                   <h3 className="text-lg md:text-xl font-bold text-white uppercase">{mod.title}</h3>
                 </div>
                 <div className="p-4 md:p-6 bg-zinc-900/40">
@@ -293,7 +253,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* REELS / CONTEÚDO DINÂMICO */}
+      {/* REELS / CONTEÚDO DINÂMICO - MANTIDO INTACTO */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <SectionHeading subtitle="Metodologia direto do campo para a tela do seu celular.">
@@ -314,16 +274,10 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* STORYTELLING - QUEM É O MENTOR */}
+      {/* STORYTELLING - QUEM É O MENTOR - MANTIDO INTACTO */}
       <section id="historia" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="flex-1 w-full"
-          >
-            {/* Foto Estilizada com tipografia Grunge atrás */}
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="flex-1 w-full">
             <div className="relative">
               <h2 className="absolute -top-10 -left-4 text-7xl md:text-9xl font-black text-zinc-800/30 uppercase z-0 select-none" style={{ fontFamily: 'Impact' }}>SIDÃO</h2>
               <div className="relative z-10 border-4 border-zinc-900 rounded-sm overflow-hidden shadow-2xl">
@@ -333,12 +287,7 @@ export default function AcademiaS12LandingPage() {
             </div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex-1 space-y-6"
-          >
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex-1 space-y-6">
             <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight" style={{ fontFamily: 'Impact' }}>
               QUEM É <span className="text-amber-500">SIDÃO?</span>
             </h2>
@@ -368,41 +317,48 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* OFERTA E CHECKOUT */}
+      {/* OFERTA E CHECKOUT - AGORA É DINÂMICO PARA O CURSO CLICADO */}
       <section id="checkout" className="py-24 bg-black relative">
-        {/* Textura de fundo */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
         
         <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10">
           <div className="bg-[#0c0d13] border border-zinc-800 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.05)]">
             <div className="p-8 md:p-12 lg:p-16 flex flex-col md:flex-row gap-12">
               
-              {/* Esquerda: O que leva */}
               <div className="flex-1 space-y-8">
                 <h3 className="text-3xl font-black text-white uppercase" style={{ fontFamily: 'Impact' }}>
                   O QUE VOCÊ VAI <span className="text-amber-500 underline decoration-amber-500/30">RECEBER</span>
                 </h3>
                 <ul className="space-y-4">
-                  {["Acesso Completo aos 5 Módulos Principais", "Certificado de Conclusão", "Bônus: Módulo Mentalidade Blindada", "Acesso de 1 Ano a todas as atualizações", "Suporte tira-dúvidas na plataforma"].map((item, i) => (
-                    <li key={i} className="flex items-center text-zinc-300 font-medium">
-                      <ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> {item}
-                    </li>
-                  ))}
+                  <li className="flex items-center text-zinc-300 font-medium">
+                    <ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso aos Módulos Exclusivos: {currentCourse.title}
+                  </li>
+                  <li className="flex items-center text-zinc-300 font-medium">
+                    <ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Certificado de Conclusão Oficial
+                  </li>
+                  <li className="flex items-center text-zinc-300 font-medium">
+                    <ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Bônus: Módulo Mentalidade Blindada
+                  </li>
+                  <li className="flex items-center text-zinc-300 font-medium">
+                    <ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso de 1 Ano a todas as atualizações
+                  </li>
+                  <li className="flex items-center text-zinc-300 font-medium">
+                    <ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Suporte tira-dúvidas na plataforma
+                  </li>
                 </ul>
               </div>
 
-              {/* Direita: Preço e CTA */}
               <div className="flex-1 bg-zinc-900/50 p-8 rounded-xl border border-zinc-800 flex flex-col justify-center items-center text-center">
                 <p className="text-zinc-400 uppercase font-bold text-sm mb-2">Investimento</p>
-                <p className="text-zinc-500 line-through text-lg">De R$ {TOTAL_PRICE}</p>
+                <p className="text-zinc-500 line-through text-lg">De R$ {currentCourse.totalPrice}</p>
                 
                 <div className="my-4">
                   <span className="text-2xl font-bold text-white mr-2">12x de</span>
-                  <span className="text-5xl md:text-6xl font-black text-amber-500">R$ {COURSE_PRICE}</span>
+                  <span className="text-5xl md:text-6xl font-black text-amber-500">R$ {currentCourse.price}</span>
                 </div>
-                <p className="text-zinc-400 text-sm mb-8">* ou R$ {TOTAL_PRICE} à vista</p>
+                <p className="text-zinc-400 text-sm mb-8">* ou R$ {currentCourse.totalPrice} à vista</p>
 
-                <ButtonCTA href="https://pay.hotmart.com/SEULINK" text="QUERO MEU ACESSO AGORA" className="w-full text-xl py-6" />
+                <ButtonCTA href={currentCourse.checkoutLink} text="QUERO MEU ACESSO AGORA" className="w-full text-xl py-6" />
                 
                 <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">
                   <span className="flex items-center"><Lock className="w-4 h-4 mr-1 text-emerald-500" /> Compra Segura</span>
@@ -413,7 +369,7 @@ export default function AcademiaS12LandingPage() {
             </div>
           </div>
 
-          {/* Garantia Gigante */}
+          {/* GARANTIA GIGANTE - RESTAURADA E MANTIDA INTACTA */}
           <div className="mt-20 text-center space-y-6">
             <h2 className="text-7xl md:text-9xl font-black text-amber-500 uppercase tracking-tighter mix-blend-lighten" style={{ fontFamily: 'Impact', textShadow: '0 10px 30px rgba(245,158,11,0.2)' }}>
               7 DIAS
@@ -426,7 +382,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* FAQ E RODAPÉ */}
+      {/* FAQ E RODAPÉ - MANTIDO INTACTO */}
       <footer className="bg-[#090A0F] pt-20 pb-10 border-t border-zinc-900">
         <div className="max-w-4xl mx-auto px-4 md:px-8 mb-20">
           <SectionHeading subtitle="Tire suas dúvidas antes de entrar em campo.">
