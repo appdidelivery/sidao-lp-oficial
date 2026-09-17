@@ -241,14 +241,20 @@ export default function AcademiaS12LandingPage() {
 
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex-1 w-full relative">
           <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl group cursor-pointer">
-            <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Treino Sidão" className="object-cover w-full h-full opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+<img 
+  src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+  alt="Treino Sidão" 
+  fetchPriority="high"
+  decoding="async"
+  className="object-cover w-full h-full opacity-60 group-hover:opacity-40 transition-opacity duration-500" 
+/>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="w-20 h-20 bg-amber-500/20 backdrop-blur-md border border-amber-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Play className="w-8 h-8 text-amber-400 ml-1" fill="currentColor" />
               </div>
               <p className="mt-4 font-bold uppercase tracking-wider text-sm text-white">Assista ao Trailer</p>
             </div>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
+<div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
           </div>
         </motion.div>
       </section>
@@ -351,7 +357,12 @@ export default function AcademiaS12LandingPage() {
             <div className="relative">
               <h2 className="absolute -top-10 -left-4 text-7xl md:text-9xl font-black text-zinc-800/30 uppercase z-0 select-none" style={{ fontFamily: 'Impact' }}>SIDÃO</h2>
               <div className="relative z-10 border-4 border-zinc-900 rounded-sm overflow-hidden shadow-2xl">
-                 <img src="https://images.unsplash.com/photo-1551280857-2b9bbe5240dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sidão Goleiro" className="w-full h-auto filter contrast-125 saturate-50" />
+<img 
+  src="https://images.unsplash.com/photo-1551280857-2b9bbe5240dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+  alt="Sidão Goleiro" 
+  loading="lazy"
+  className="w-full h-auto filter contrast-125 saturate-50" 
+/>
                  <div className="absolute inset-0 bg-gradient-to-t from-[#090A0F] to-transparent"></div>
               </div>
             </div>
