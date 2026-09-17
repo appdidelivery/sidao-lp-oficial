@@ -230,11 +230,11 @@ export default function AcademiaS12LandingPage() {
 
           <div className="pt-8 border-t border-zinc-800/50 mt-8 flex flex-col gap-3 items-center md:items-start">
             <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Vivência Real de Alto Nível:</span>
-            <div className="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-               <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">SPFC</div>
-               <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">BFR</div>
-               <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">CRVG</div>
-               <div className="h-8 w-8 bg-zinc-800 rounded flex items-center justify-center font-bold text-xs text-white">GEC</div>
+            <div className="flex gap-6 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+               <img src="/escudo-spfc.png" alt="São Paulo FC" className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="São Paulo FC" />
+               <img src="/escudo-bfr.png" alt="Botafogo" className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Botafogo" />
+               <img src="/escudo-crvg.png" alt="Vasco da Gama" className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Vasco" />
+               <img src="/escudo-gec.png" alt="Goiás" className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Goiás" />
             </div>
           </div>
         </motion.div>
@@ -329,7 +329,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      {/* REELS / CONTEÚDO DINÂMICO */}
+      {/* REELS / CONTEÚDO DINÂMICO - VERSÃO RETENÇÃO DE LEAD */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <SectionHeading subtitle="Metodologia direto do campo para a tela do seu celular.">
@@ -337,15 +337,71 @@ export default function AcademiaS12LandingPage() {
           </SectionHeading>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden group cursor-pointer border border-zinc-800 hover:border-amber-500/50 transition-colors">
-                <img src={`https://images.unsplash.com/photo-1518605368461-1e1252223019?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80`} alt="Treino" className="object-cover w-full h-full opacity-60 group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-4">
-                  <Play className="w-8 h-8 text-white mb-2 opacity-80" />
-                  <p className="text-white font-bold text-sm line-clamp-2 uppercase">Dica Prática #{i}: O segredo do 1x1</p>
-                </div>
+            
+            {/* VÍDEO 1 */}
+            <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
+              <video
+                className="object-cover w-full h-full"
+                controls
+                preload="none"
+                poster="/thumb-1.jpg"
+                playsInline
+              >
+                <source src="/reel-1.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
+                <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Melhorar seu treino</p>
               </div>
-            ))}
+            </div>
+
+            {/* VÍDEO 2 */}
+            <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
+              <video
+                className="object-cover w-full h-full"
+                controls
+                preload="none"
+                poster="/thumb-2.jpg"
+                playsInline
+              >
+                <source src="/reel-2.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
+                <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Formas de reposição</p>
+              </div>
+            </div>
+
+            {/* VÍDEO 3 */}
+            <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
+              <video
+                className="object-cover w-full h-full"
+                controls
+                preload="none"
+                poster="/thumb-3.jpg"
+                playsInline
+              >
+                <source src="/reel-3.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
+                <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Gestos no treinamento</p>
+              </div>
+            </div>
+
+            {/* VÍDEO 4 */}
+            <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
+              <video
+                className="object-cover w-full h-full"
+                controls
+                preload="none"
+                poster="/thumb-4.jpg"
+                playsInline
+              >
+                <source src="/reel-4.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
+                <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Equilibrio e encaixe</p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -357,13 +413,13 @@ export default function AcademiaS12LandingPage() {
             <div className="relative">
               <h2 className="absolute -top-10 -left-4 text-7xl md:text-9xl font-black text-zinc-800/30 uppercase z-0 select-none" style={{ fontFamily: 'Impact' }}>SIDÃO</h2>
               <div className="relative z-10 border-4 border-zinc-900 rounded-sm overflow-hidden shadow-2xl">
-<img 
-  src="https://images.unsplash.com/photo-1551280857-2b9bbe5240dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-  alt="Sidão Goleiro" 
-  loading="lazy"
-  className="w-full h-auto filter contrast-125 saturate-50" 
-/>
-                 <div className="absolute inset-0 bg-gradient-to-t from-[#090A0F] to-transparent"></div>
+                 <img 
+                   src="/sidao-goleiro.png" 
+                   alt="Sidão Goleiro" 
+                   loading="lazy"
+                   className="w-full h-auto object-cover filter contrast-125 saturate-50" 
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-[#090A0F] via-transparent to-transparent"></div>
               </div>
             </div>
           </motion.div>
