@@ -97,6 +97,21 @@ export default function AcademiaS12LandingPage() {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState(false);
 
+  // --- ESTADOS DO NOVO FORMULÁRIO DE CAPTURA (LIVE) ---
+  const [formData, setFormData] = useState({
+    nome: '',
+    whatsapp: '',
+    perfil: ''
+  });
+
+  const handleSubmitLead = (e: React.FormEvent) => {
+    e.preventDefault();
+    const mensagem = `*NOVO LEAD - LIVE DO SIDÃO (ACADEMIA S12)*%0A%0A*Nome:* ${formData.nome}%0A*WhatsApp:* ${formData.whatsapp}%0A*Perfil do Atleta:* ${formData.perfil}%0A%0A_Lead capturado via página oficial._`;
+    const numeroAgencia = "554832200260";
+    const whatsappUrl = `https://wa.me/${numeroAgencia}?text=${mensagem}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   // Verifica se o usuário já digitou a senha antes (salvo no navegador)
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -119,7 +134,7 @@ export default function AcademiaS12LandingPage() {
     }
   };
 
-  // --- TELA DE BLOQUEIO (GATEKEEPER) ---
+  // --- TELA DE BLOQUEIO (GATEKEEPER) - AGORA COMO CAPTURA DE LEADS ---
   if (!isUnlocked) {
     return (
       <div className="min-h-screen bg-[#090A0F] text-zinc-300 flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -129,27 +144,80 @@ export default function AcademiaS12LandingPage() {
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }} 
           animate={{ opacity: 1, scale: 1 }} 
-          className="bg-zinc-900/80 border border-zinc-800 p-8 md:p-12 rounded-2xl max-w-lg w-full text-center z-10 shadow-2xl backdrop-blur-sm"
+          className="bg-zinc-900/80 border border-zinc-800 p-8 rounded-2xl max-w-lg w-full text-center z-10 shadow-2xl backdrop-blur-sm"
         >
-          <img src="/logo-horizontal.jpeg" alt="Academia S12" className="h-16 mx-auto mb-8 object-contain" />
-          <h2 className="text-3xl font-black text-white uppercase mb-4" style={{ fontFamily: 'Impact' }}>Em Breve!</h2>
-          <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-            "Fala galera, aqui é o Sidão! Estamos ajustando os últimos detalhes no campo antes de abrir as portas da Academia S12. Fique ligado no meu Instagram para novidades!"
+          <img src="/logo-horizontal.jpeg" alt="Academia S12" className="h-12 mx-auto mb-6 object-contain" />
+          
+          <h2 className="text-3xl font-black text-white uppercase mb-2" style={{ fontFamily: 'Impact' }}>
+            LISTA VIP <span className="text-amber-500">S12</span>
+          </h2>
+          <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
+            Preencha rápido para garantir sua vaga e acessar as condições exclusivas liberadas na live de hoje.
           </p>
           
-          {/* Formulário secreto para a equipe */}
-          <form onSubmit={handleUnlock} className="mt-8 pt-8 border-t border-zinc-800/50 flex flex-col gap-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-600 mb-2">Acesso Exclusivo Equipe</p>
+          {/* Formulário de Captura Live */}
+          <form onSubmit={handleSubmitLead} className="flex flex-col gap-4 text-left">
+            <div>
+              <label htmlFor="nome" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Seu Nome</label>
+              <input 
+                id="nome"
+                type="text" 
+                required
+                placeholder="Ex: Taffarel"
+                value={formData.nome}
+                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="whatsapp" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">WhatsApp (com DDD)</label>
+              <input 
+                id="whatsapp"
+                type="tel" 
+                required
+                placeholder="Ex: 11 99999-9999"
+                value={formData.whatsapp}
+                onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="perfil" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Qual é o seu perfil?</label>
+              <select 
+                id="perfil"
+                required
+                value={formData.perfil}
+                onChange={(e) => setFormData({ ...formData, perfil: e.target.value })}
+                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none"
+              >
+                <option value="" disabled className="text-zinc-700">Selecione uma opção...</option>
+                <option value="Goleiro Amador">Goleiro Amador</option>
+                <option value="Atleta de Base">Atleta de Base</option>
+                <option value="Preparador de Goleiros / Físico">Preparador de Goleiros / Físico</option>
+              </select>
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-wider p-4 rounded transition-all mt-2 shadow-[0_0_15px_rgba(5,150,105,0.3)] hover:shadow-[0_0_25px_rgba(5,150,105,0.5)] transform hover:scale-[1.02]"
+            >
+              GARANTIR MINHA VAGA ➔
+            </button>
+          </form>
+
+          {/* Mantivemos o formulário da equipe pequeno no rodapé */}
+          <form onSubmit={handleUnlock} className="mt-8 pt-6 border-t border-zinc-800/50 flex flex-col gap-2">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1">Acesso Restrito</p>
             <input 
               type="password" 
-              placeholder="Senha de Acesso"
+              placeholder="Senha de Equipe"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
-              className={`w-full bg-[#090A0F] border ${passwordError ? 'border-red-500' : 'border-zinc-800'} rounded p-3 text-center text-white focus:outline-none focus:border-amber-500 transition-colors`}
+              className={`w-full bg-transparent border-b ${passwordError ? 'border-red-500' : 'border-zinc-800'} p-2 text-center text-xs text-zinc-500 focus:outline-none focus:border-amber-500 focus:text-white transition-colors`}
             />
-            <button type="submit" className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold uppercase p-3 rounded transition-colors text-sm">
-              Entrar
-            </button>
+            {/* O enter já submete o form secretamente, mantendo o design limpo */}
           </form>
         </motion.div>
       </div>
