@@ -19,12 +19,12 @@ const db = getFirestore(app);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { nome, email, whatsapp } = body;
+    const { nome, whatsapp, perfil } = body;
 
-    // Validação básica de segurança
-    if (!nome || !email || !whatsapp) {
+    // Validação básica de segurança (Agora exige PERFIL ao invés de EMAIL)
+    if (!nome || !whatsapp || !perfil) {
       return NextResponse.json(
-        { error: 'Dados incompletos. Nome, email e whatsapp são obrigatórios.' },
+        { error: 'Dados incompletos. Preencha todos os campos.' },
         { status: 400 }
       );
     }
@@ -32,8 +32,8 @@ export async function POST(request: Request) {
     // Inserção no Firestore
     const docRef = await addDoc(collection(db, 'leads_s12'), {
       nome,
-      email,
       whatsapp,
+      perfil,
       origem: 'Landing Page S12 (Live)',
       criadoEm: serverTimestamp(),
     });
