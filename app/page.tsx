@@ -97,19 +97,42 @@ export default function AcademiaS12LandingPage() {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState(false);
 
-  // --- ESTADOS DO NOVO FORMULÁRIO DE CAPTURA (LIVE) ---
+  // --- ESTADOS DO NOVO FORMULÁRIO DE CAPTURA (INTEGRADO API) ---
   const [formData, setFormData] = useState({
     nome: '',
-    whatsapp: '',
-    perfil: ''
+    email: '',
+    whatsapp: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmitLead = (e: React.FormEvent) => {
+  const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mensagem = `*NOVO LEAD - LIVE DO SIDÃO (ACADEMIA S12)*%0A%0A*Nome:* ${formData.nome}%0A*WhatsApp:* ${formData.whatsapp}%0A*Perfil do Atleta:* ${formData.perfil}%0A%0A_Lead capturado via página oficial._`;
-    const numeroAgencia = "554832200260";
-    const whatsappUrl = `https://wa.me/${numeroAgencia}?text=${mensagem}`;
-    window.open(whatsappUrl, '_blank');
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Redirecionamento tático forçando a Keyword exata para o ManyChat no WhatsApp
+        const numeroAgencia = "554832200260";
+        const mensagem = "Quero entrar na Academia S12";
+        const whatsappUrl = `https://wa.me/${numeroAgencia}?text=${encodeURIComponent(mensagem)}`;
+        
+        // window.location.href é preferível aqui para forçar a abertura do app nativo (Deep Link) no mobile sem bloqueio de pop-up
+        window.location.href = whatsappUrl;
+      } else {
+        alert("Não conseguimos processar sua inscrição. Por favor, tente novamente.");
+        setIsSubmitting(false);
+      }
+    } catch (error) {
+      console.error("Erro ao enviar lead:", error);
+      alert("Erro de conexão. Verifique sua internet e tente novamente.");
+      setIsSubmitting(false);
+    }
   };
 
   // Verifica se o usuário já digitou a senha antes (salvo no navegador)
@@ -152,10 +175,10 @@ export default function AcademiaS12LandingPage() {
             LISTA VIP <span className="text-amber-500">S12</span>
           </h2>
           <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
-            Preencha rápido para garantir sua vaga e acessar as condições exclusivas liberadas na live de hoje.
+            Garanta sua vaga na lista de espera preenchendo os dados abaixo.
           </p>
           
-          {/* Formulário de Captura Live */}
+          {/* Formulário de Captura Live + Firebase */}
           <form onSubmit={handleSubmitLead} className="flex flex-col gap-4 text-left">
             <div>
               <label htmlFor="nome" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Seu Nome</label>
@@ -167,6 +190,21 @@ export default function AcademiaS12LandingPage() {
                 value={formData.nome}
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Seu E-mail</label>
+              <input 
+                id="email"
+                type="email" 
+                required
+                placeholder="Ex: goleiro@email.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
+                disabled={isSubmitting}
               />
             </div>
 
@@ -180,30 +218,21 @@ export default function AcademiaS12LandingPage() {
                 value={formData.whatsapp}
                 onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                 className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
+                disabled={isSubmitting}
               />
-            </div>
-
-            <div>
-              <label htmlFor="perfil" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Qual é o seu perfil?</label>
-              <select 
-                id="perfil"
-                required
-                value={formData.perfil}
-                onChange={(e) => setFormData({ ...formData, perfil: e.target.value })}
-                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none"
-              >
-                <option value="" disabled className="text-zinc-700">Selecione uma opção...</option>
-                <option value="Goleiro Amador">Goleiro Amador</option>
-                <option value="Atleta de Base">Atleta de Base</option>
-                <option value="Preparador de Goleiros / Físico">Preparador de Goleiros / Físico</option>
-              </select>
             </div>
 
             <button 
               type="submit" 
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-wider p-4 rounded transition-all mt-2 shadow-[0_0_15px_rgba(5,150,105,0.3)] hover:shadow-[0_0_25px_rgba(5,150,105,0.5)] transform hover:scale-[1.02]"
+              disabled={isSubmitting}
+              className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 disabled:text-zinc-400 text-white font-black uppercase tracking-wider p-4 rounded transition-all mt-2 shadow-[0_0_15px_rgba(5,150,105,0.3)] hover:shadow-[0_0_25px_rgba(5,150,105,0.5)] transform hover:scale-[1.02] disabled:hover:scale-100 disabled:hover:shadow-none flex justify-center items-center"
             >
-              GARANTIR MINHA VAGA ➔
+              {isSubmitting ? (
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : "ACESSAR GRUPO VIP ➔"}
             </button>
           </form>
 
@@ -217,7 +246,6 @@ export default function AcademiaS12LandingPage() {
               onChange={(e) => setPasswordInput(e.target.value)}
               className={`w-full bg-transparent border-b ${passwordError ? 'border-red-500' : 'border-zinc-800'} p-2 text-center text-xs text-zinc-500 focus:outline-none focus:border-amber-500 focus:text-white transition-colors`}
             />
-            {/* O enter já submete o form secretamente, mantendo o design limpo */}
           </form>
         </motion.div>
       </div>
