@@ -117,10 +117,8 @@ export default function AcademiaS12LandingPage() {
       });
 
       if (response.ok) {
-        if (response.ok) {
         // Redirecionamento DIRETO para o Grupo VIP do WhatsApp (Bypass do ManyChat)
-        // COLE O LINK DE CONVITE DO SEU GRUPO AQUI EMBAIXO:
-        const linkDoGrupoVIP = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTIU?s=cl&p=a&mlu=0&ilr=4; 
+        const linkDoGrupoVIP = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTlU?s=cl&p=a&mlu=0&ilr=4"; 
         
         window.location.href = linkDoGrupoVIP;
       } else {
