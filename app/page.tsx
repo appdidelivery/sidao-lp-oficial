@@ -117,11 +117,12 @@ export default function AcademiaS12LandingPage() {
       });
 
       if (response.ok) {
-        // Redirecionamento ManyChat
-        const numeroAgencia = "554832200260";
-        const mensagem = "Quero entrar na Academia S12";
-        const whatsappUrl = `https://wa.me/${numeroAgencia}?text=${encodeURIComponent(mensagem)}`;
-        window.location.href = whatsappUrl;
+        if (response.ok) {
+        // Redirecionamento DIRETO para o Grupo VIP do WhatsApp (Bypass do ManyChat)
+        // COLE O LINK DE CONVITE DO SEU GRUPO AQUI EMBAIXO:
+        const linkDoGrupoVIP = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTIU?s=cl&p=a&mlu=0&ilr=4; 
+        
+        window.location.href = linkDoGrupoVIP;
       } else {
         alert("Não conseguimos processar sua inscrição. Por favor, tente novamente.");
         setIsSubmitting(false);
