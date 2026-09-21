@@ -334,21 +334,20 @@ export default function AcademiaS12LandingPage() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex-1 w-full relative">
-          <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl group cursor-pointer">
-<img 
-  src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-  alt="Treino Sidão" 
-  fetchPriority="high"
-  decoding="async"
-  className="object-cover w-full h-full opacity-60 group-hover:opacity-40 transition-opacity duration-500" 
-/>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="w-20 h-20 bg-amber-500/20 backdrop-blur-md border border-amber-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-8 h-8 text-amber-400 ml-1" fill="currentColor" />
-              </div>
-              <p className="mt-4 font-bold uppercase tracking-wider text-sm text-white">Assista ao Trailer</p>
-            </div>
-<div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
+          <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl">
+            
+            {/* Substitua o ID abaixo pelo ID real do seu vídeo no YouTube */}
+            <iframe 
+              className="absolute inset-0 w-full h-full relative z-10 rounded-xl"
+              src="https://www.youtube.com/embed/P4EKAeaEC-U?rel=0&modestbranding=1&controls=1" 
+              title="Trailer Oficial - Academia S12" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+            ></iframe>
+
+            {/* Mantemos a textura dark tech nas bordas, sem bloquear o play do YouTube */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none z-20 rounded-xl"></div>
           </div>
         </motion.div>
       </section>
@@ -460,7 +459,7 @@ export default function AcademiaS12LandingPage() {
                 <source src="/reel-2.mp4" type="video/mp4" />
               </video>
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
-                <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Formas de reposição</p>
+                <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Saída com os pés</p>
               </div>
             </div>
 
