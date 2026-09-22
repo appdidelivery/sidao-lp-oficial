@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "./site-config";
 // Importando o componente oficial do GTM do Next.js
 import { GoogleTagManager } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sidao-lp-oficial.vercel.app"),
-  title: "Academia S12 | Método Definitivo para Goleiros",
-  description: "Aprenda técnica de elite, o jogo moderno com os pés e a blindagem mental com o ex-goleiro profissional Sidão.",
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  twitter: { card: "summary_large_image", title: SITE_TITLE, description: SITE_DESCRIPTION, images: ["/sidao-goleiro.png"] },
   openGraph: {
     title: "Academia S12 | Método Sidão",
     description: "Domine a grande área e blinde sua mente. A metodologia oficial de quem viveu a pressão dos maiores clubes do Brasil.",
-    url: "https://sidao-lp-oficial.vercel.app", 
+    url: SITE_URL, 
     siteName: "Academia S12",
     images: [
       {

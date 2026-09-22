@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ShieldCheck, 
+  Play,
   Brain, 
   Trophy, 
   ChevronDown, 
@@ -90,6 +91,7 @@ const ButtonCTA = ({ href = VIP_GROUP_URL, text = "Entrar no Grupo VIP", classNa
 export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean }) {
   const router = useRouter();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
   const [activeCourse, setActiveCourse] = useState(0);
   const currentCourse = COURSES_DATA[activeCourse];
   
@@ -306,7 +308,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-            <ButtonCTA href={VIP_GROUP_URL} text="ENTRAR NO GRUPO VIP" className="w-full sm:w-auto text-lg py-5 px-10 animate-pulse" />
+            <ButtonCTA href={VIP_GROUP_URL} text="ENTRAR NO GRUPO VIP" className="w-full sm:w-auto text-lg py-5 px-10" />
             <span className="text-sm text-zinc-500 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-500" /> Acompanhe a abertura das inscrições
             </span>
@@ -326,18 +328,27 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex-1 w-full relative">
           <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl">
             
-            {/* Substitua o ID abaixo pelo ID real do seu vídeo no YouTube */}
-            <iframe 
-              className="absolute inset-0 w-full h-full relative z-10 rounded-xl"
-              src="https://www.youtube.com/embed/P4EKAeaEC-U?rel=0&modestbranding=1&controls=1" 
-              title="Trailer Oficial - Academia S12" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-            ></iframe>
-
-            {/* Mantemos a textura dark tech nas bordas, sem bloquear o play do YouTube */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none z-20 rounded-xl"></div>
+            {isTrailerPlaying ? (
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube-nocookie.com/embed/P4EKAeaEC-U?autoplay=1&rel=0"
+                title="Trailer Oficial - Academia S12"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsTrailerPlaying(true)}
+                aria-label="Reproduzir trailer da Academia S12"
+                className="absolute inset-0 w-full h-full flex items-center justify-center bg-cover bg-center group"
+                style={{ backgroundImage: "url(https://i.ytimg.com/vi/P4EKAeaEC-U/hqdefault.jpg)" }}
+              >
+                <span className="flex items-center justify-center w-20 h-14 rounded-xl bg-red-600 text-white shadow-xl group-hover:bg-red-500 transition-colors">
+                  <Play className="w-8 h-8 fill-current" aria-hidden="true" />
+                </span>
+              </button>
+            )}
           </div>
         </motion.div>
       </section>
@@ -427,7 +438,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 className="object-cover w-full h-full"
                 controls
                 preload="none"
-                poster="/thumb-1.jpg"
+                poster="/thumb-1.webp"
                 playsInline
               >
                 <source src="/reel-1.mp4" type="video/mp4" />
@@ -443,7 +454,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 className="object-cover w-full h-full"
                 controls
                 preload="none"
-                poster="/thumb-2.jpg"
+                poster="/thumb-2.webp"
                 playsInline
               >
                 <source src="/reel-2.mp4" type="video/mp4" />
@@ -459,7 +470,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 className="object-cover w-full h-full"
                 controls
                 preload="none"
-                poster="/thumb-3.jpg"
+                poster="/thumb-3.webp"
                 playsInline
               >
                 <source src="/reel-3.mp4" type="video/mp4" />
@@ -475,7 +486,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 className="object-cover w-full h-full"
                 controls
                 preload="none"
-                poster="/thumb-4.jpg"
+                poster="/thumb-4.webp"
                 playsInline
               >
                 <source src="/reel-4.mp4" type="video/mp4" />
