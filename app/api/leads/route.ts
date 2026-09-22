@@ -1,8 +1,7 @@
-import { NextResponse } from 'next/server';
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { NextResponse } from "next/server";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-// Configuração flexível: Use suas variáveis de ambiente padrão do Next.js
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,41 +11,43 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Singleton para evitar múltiplas instâncias no hot-reload do Next.js
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
+const allowedProfiles = new Set([
+  "Goleiro Amador",
+  "Atleta de Base",
+  "Preparador de Goleiros / Físico",
+]);
 
 export async function POST(request: Request) {
+  const origin = request.headers.get("origin");
+  if (origin && origin !== new URL(request.url).origin) {
+    return NextResponse.json({ error: "Origem inválida." }, { status: 403 });
+  }
+  const body: unknown = await request.json().catch(() => null);
+  if (typeof body !== "object" || body === null) {
+    return NextResponse.json({ error: "Dados inválidos." }, { status: 400 });
+  }
+  const fields = body as Record<string, unknown>;
+  const nome = typeof fields.nome === "string" ? fields.nome.trim() : "";
+  const whatsapp = typeof fields.whatsapp === "string" ? fields.whatsapp.trim() : "";
+  const perfil = fields.perfil;
+  const digits = whatsapp.replace(/\D/g, "");
+  if (nome.length < 2 || nome.length > 100 || digits.length < 10 || digits.length > 13 || !allowedProfiles.has(String(perfil))) {
+    return NextResponse.json({ error: "Confira os dados informados." }, { status: 400 });
+  }
+
   try {
-    const body = await request.json();
-    const { nome, whatsapp, perfil } = body;
-
-    // Validação básica de segurança (Agora exige PERFIL ao invés de EMAIL)
-    if (!nome || !whatsapp || !perfil) {
-      return NextResponse.json(
-        { error: 'Dados incompletos. Preencha todos os campos.' },
-        { status: 400 }
-      );
-    }
-
-    // Inserção no Firestore
-    const docRef = await addDoc(collection(db, 'leads_s12'), {
+    const docRef = await addDoc(collection(db, "leads_s12"), {
       nome,
-      whatsapp,
+      whatsapp: digits,
       perfil,
-      origem: 'Landing Page S12 (Live)',
+      origem: "Landing Page S12 (Live)",
       criadoEm: serverTimestamp(),
     });
-
-    return NextResponse.json(
-      { success: true, message: 'Lead capturado com sucesso', id: docRef.id },
-      { status: 200 }
-    );
-  } catch (error: any) {
-    console.error('Erro ao salvar lead no Firestore:', error);
-    return NextResponse.json(
-      { error: 'Falha interna ao processar o lead.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: true, id: docRef.id });
+  } catch (error: unknown) {
+    console.error("Erro ao salvar lead no Firestore:", error);
+    return NextResponse.json({ error: "Falha interna ao processar o lead." }, { status: 500 });
   }
 }
