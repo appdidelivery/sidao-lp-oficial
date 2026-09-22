@@ -82,10 +82,10 @@ const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, sub
   </div>
 );
 
-const ButtonCTA = ({ href = VIP_GROUP_URL, text = "Entrar no Grupo VIP", className = "", onClick = () => {} }) => (
-  <a href={href} onClick={onClick} className={`block text-center bg-gradient-to-r from-amber-600 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-zinc-950 font-bold uppercase tracking-wider rounded-sm transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(245,158,11,0.4)] ${className}`}>
+const ButtonCTA = ({ text = "Entrar no Grupo VIP", className = "", onClick }: { text?: string; className?: string; onClick: () => void }) => (
+  <button type="button" onClick={onClick} className={`block text-center bg-gradient-to-r from-amber-600 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-zinc-950 font-bold uppercase tracking-wider rounded-sm transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(245,158,11,0.4)] ${className}`}>
     {text}
-  </a>
+  </button>
 );
 
 export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean }) {
@@ -107,6 +107,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
     perfil: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
 
   const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,26 +151,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
     }
   };
 
-  // --- TELA DE BLOQUEIO (GATEKEEPER) - CAPTURA DE LEADS ---
-  if (!unlocked) {
-    return (
-      <div className="min-h-screen bg-[#090A0F] text-zinc-300 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
-        
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }} 
-          animate={{ opacity: 1, scale: 1 }} 
-          className="bg-zinc-900/80 border border-zinc-800 p-8 rounded-2xl max-w-lg w-full text-center z-10 shadow-2xl backdrop-blur-sm"
-        >
-          <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={48} className="h-12 w-auto mx-auto mb-6 object-contain" />
-          
-          <h2 className="text-3xl font-black text-white uppercase mb-2" style={{ fontFamily: 'Impact' }}>
-            LISTA VIP <span className="text-amber-500">S12</span>
-          </h2>
-          <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
-            Garanta sua vaga na lista de espera preenchendo os dados abaixo.
-          </p>
-          
+  const leadForm = (
           <form onSubmit={handleSubmitLead} className="flex flex-col gap-4 text-left">
             <div>
               <label htmlFor="nome" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Seu Nome</label>
@@ -230,6 +212,29 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             </button>
           </form>
 
+  );
+
+  // --- TELA DE BLOQUEIO (GATEKEEPER) - CAPTURA DE LEADS ---
+  if (!unlocked) {
+    return (
+      <div className="min-h-screen bg-[#090A0F] text-zinc-300 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
+        
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          className="bg-zinc-900/80 border border-zinc-800 p-8 rounded-2xl max-w-lg w-full text-center z-10 shadow-2xl backdrop-blur-sm"
+        >
+          <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={48} className="h-12 w-auto mx-auto mb-6 object-contain" />
+          
+          <h2 className="text-3xl font-black text-white uppercase mb-2" style={{ fontFamily: 'Impact' }}>
+            LISTA VIP <span className="text-amber-500">S12</span>
+          </h2>
+          <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
+            Garanta sua vaga na lista de espera preenchendo os dados abaixo.
+          </p>
+          
+          {leadForm}
           {/* Mantivemos o formulário da equipe pequeno no rodapé */}
           <form onSubmit={handleUnlock} className="mt-8 pt-6 border-t border-zinc-800/50 flex flex-col gap-2">
             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1">Acesso Restrito</p>
@@ -250,6 +255,36 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
   return (
     <div className="min-h-screen bg-[#090A0F] text-zinc-300 font-sans selection:bg-amber-500 selection:text-black overflow-x-hidden">
 
+      <AnimatePresence>
+        {isLeadFormOpen && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => !isSubmitting && setIsLeadFormOpen(false)}
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="lead-form-title"
+              className="relative w-full max-w-lg rounded-2xl border border-zinc-800 bg-zinc-900 p-6 md:p-8 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button type="button" aria-label="Fechar formulário" onClick={() => setIsLeadFormOpen(false)} disabled={isSubmitting} className="absolute right-4 top-4 text-zinc-400 hover:text-white disabled:opacity-50">
+                <X className="h-6 w-6" />
+              </button>
+              <h2 id="lead-form-title" className="mb-2 text-center text-3xl font-black uppercase text-white">Entre no <span className="text-amber-500">Grupo VIP</span></h2>
+              <p className="mb-6 text-center text-sm text-zinc-400">Preencha seus dados para receber o acesso ao grupo.</p>
+              {leadForm}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* HEADER FIXO E MENU MOBILE AJUSTADO */}
       <header className="fixed top-0 w-full z-50 bg-[#090A0F]/90 backdrop-blur-md border-b border-zinc-800 transition-all">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
@@ -262,12 +297,12 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             <a href="#cursos" className="hover:text-amber-500 transition-colors">Cursos</a>
             <a href="#modulos" className="hover:text-amber-500 transition-colors">Módulos</a>
             <a href="#historia" className="hover:text-amber-500 transition-colors">O Mentor</a>
-            <ButtonCTA href={VIP_GROUP_URL} text="Grupo VIP" className="py-2 px-6 text-sm ml-4" />
+            <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-6 text-sm ml-4" />
           </nav>
 
           {/* Botões Mobile (Hambúrguer + CTA Menor) */}
           <div className="flex md:hidden items-center gap-3 z-50">
-            <ButtonCTA href={VIP_GROUP_URL} text="Grupo VIP" className="py-2 px-4 text-xs" />
+            <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-4 text-xs" />
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1">
               {isMobileMenuOpen ? <X className="w-8 h-8 text-amber-500" /> : <Menu className="w-8 h-8" />}
             </button>
@@ -308,7 +343,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-            <ButtonCTA href={VIP_GROUP_URL} text="ENTRAR NO GRUPO VIP" className="w-full sm:w-auto text-lg py-5 px-10" />
+            <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="ENTRAR NO GRUPO VIP" className="w-full sm:w-auto text-lg py-5 px-10" />
             <span className="text-sm text-zinc-500 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-500" /> Acompanhe a abertura das inscrições
             </span>
@@ -582,7 +617,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                   </div>
                 )}
                 <p className="text-amber-400 font-bold mb-6">Inscrições em breve. Entre no grupo VIP para receber as novidades.</p>
-                <ButtonCTA href={VIP_GROUP_URL} text="ENTRAR NO GRUPO VIP" className="w-full text-lg py-5" />
+                <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="ENTRAR NO GRUPO VIP" className="w-full text-lg py-5" />
               </div>
             </div>
           </div>
