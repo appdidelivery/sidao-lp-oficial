@@ -14,6 +14,7 @@ import {
   X // Ícone para fechar o menu mobile
 } from "lucide-react";
 import Image from "next/image";
+import VideoPreview from "./video-preview";
 import { useRouter } from "next/navigation";
 
 const VIP_GROUP_URL = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTIU";
@@ -292,7 +293,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       <header className="fixed top-0 w-full z-50 bg-[#090A0F]/90 backdrop-blur-md border-b border-zinc-800 transition-all">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
           <a href="#" className="flex items-center z-50">
-            <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={56} className="h-10 md:h-14 w-auto object-contain" />
+            <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={56} sizes="(min-width: 768px) 170px, 122px" loading="eager" className="h-10 md:h-14 w-auto object-contain" />
           </a>
           
           {/* Menu Desktop */}
@@ -306,7 +307,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           {/* Botões Mobile (Hambúrguer + CTA Menor) */}
           <div className="flex md:hidden items-center gap-3 z-50">
             <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-4 text-xs" />
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1">
+            <button type="button" aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={isMobileMenuOpen} aria-controls="menu-mobile" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1">
               {isMobileMenuOpen ? <X className="w-8 h-8 text-amber-500" /> : <Menu className="w-8 h-8" />}
             </button>
           </div>
@@ -316,6 +317,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
+              id="menu-mobile"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -333,7 +335,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 z-10 mt-10 md:mt-0">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="flex-1 space-y-6 text-center md:text-left">
+        <motion.div initial={false} className="flex-1 space-y-6 text-center md:text-left">
           <div className="inline-block border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
             A Metodologia Oficial do Camisa 12
           </div>
@@ -368,7 +370,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                  <Image src="/escudo-gec.png" alt="Sidão no Goiás" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Goiás" />
                </a>
                <a href="https://paranaclube.com.br/goleiro-sidao-e-o-novo-reforco-do-parana-clube/" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Paraná Clube (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
-                 <Image src="/escudo-parana.png" alt="Sidão no Paraná Clube" width={269} height={500} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Paraná Clube" />
+                 <Image src="/escudo-parana.png" alt="Sidão no Paraná Clube" width={269} height={500} sizes="22px" className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Paraná Clube" />
                </a>
                <a href="https://figueirense.com.br/apresentacao-oficial-goleiro-sidao/" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Figueirense (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
                  <Image src="/escudo-figueirense.svg" alt="Sidão no Figueirense Futebol Clube" width={1898} height={2200} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Figueirense" />
@@ -377,7 +379,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex-1 w-full relative">
+        <motion.div initial={false} className="flex-1 w-full relative">
           <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl">
             
             {isTrailerPlaying ? (
@@ -487,15 +489,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             
             {/* VÍDEO 1 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <video
-                className="object-cover w-full h-full"
-                controls
-                preload="none"
-                poster="/thumb-1.webp"
-                playsInline
-              >
-                <source src="/reel-1.mp4" type="video/mp4" />
-              </video>
+              <VideoPreview src="/reel-1.mp4" poster="/thumb-1.webp" title="Treino na prática 1 — Sidão" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Melhorar seu treino</p>
               </div>
@@ -503,15 +497,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
             {/* VÍDEO 2 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <video
-                className="object-cover w-full h-full"
-                controls
-                preload="none"
-                poster="/thumb-2.webp"
-                playsInline
-              >
-                <source src="/reel-2.mp4" type="video/mp4" />
-              </video>
+              <VideoPreview src="/reel-2.mp4" poster="/thumb-2.webp" title="Treino na prática 2 — Sidão" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Saída com os pés</p>
               </div>
@@ -519,15 +505,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
             {/* VÍDEO 3 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <video
-                className="object-cover w-full h-full"
-                controls
-                preload="none"
-                poster="/thumb-3.webp"
-                playsInline
-              >
-                <source src="/reel-3.mp4" type="video/mp4" />
-              </video>
+              <VideoPreview src="/reel-3.mp4" poster="/thumb-3.webp" title="Treino na prática 3 — Sidão" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Gestos no treinamento</p>
               </div>
@@ -535,15 +513,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
             {/* VÍDEO 4 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <video
-                className="object-cover w-full h-full"
-                controls
-                preload="none"
-                poster="/thumb-4.webp"
-                playsInline
-              >
-                <source src="/reel-4.mp4" type="video/mp4" />
-              </video>
+              <VideoPreview src="/reel-4.mp4" poster="/thumb-4.webp" title="Treino na prática 4 — Sidão" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Equilibrio e encaixe</p>
               </div>
