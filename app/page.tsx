@@ -1,5 +1,5 @@
 import AcademiaS12LandingPage from "./landing-page";
-import { HUB_URL, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "./site-config";
+import { HUB_URL, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, SOCIAL_PROFILES } from "./site-config";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -11,6 +11,7 @@ const structuredData = {
       description: SITE_DESCRIPTION,
       url: SITE_URL,
       logo: `${SITE_URL}/logo-horizontal.jpeg`,
+      sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
     },
     {
       "@type": "Person",

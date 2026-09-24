@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import VideoPreview from "./video-preview";
+import { SOCIAL_PROFILES } from "./site-config";
 import { useRouter } from "next/navigation";
 
 const VIP_GROUP_URL = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTIU";
@@ -653,6 +654,31 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         <div className="max-w-7xl mx-auto px-4 text-center border-t border-zinc-900 pt-8">
           <p className="text-zinc-600 text-sm font-bold uppercase tracking-widest">Produzido por: Academia S12 | Sidão</p>
           <p className="mt-3 text-sm text-zinc-400">Academia S12 é a escola de goleiros com a metodologia do Sidão e integra o projeto Sidão 12.</p>
+          <nav aria-label="Redes sociais da Academia S12" className="mt-6 flex flex-wrap items-center justify-center gap-4">
+            {SOCIAL_PROFILES.map((profile) => (
+              <a key={profile.icon} href={profile.url} target="_blank" rel="noopener noreferrer"
+                aria-label={`Academia S12 no ${profile.name} (abre em nova aba)`}
+                className="inline-flex min-h-11 items-center gap-2 rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-colors hover:border-amber-400 hover:text-amber-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400">
+                <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true" focusable="false">
+                  {profile.icon === "instagram" ? (
+                    <g fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="5" />
+                      <circle cx="12" cy="12" r="4" />
+                      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                    </g>
+                  ) : profile.icon === "youtube" ? (
+                    <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
+                      <rect x="2" y="5" width="20" height="14" rx="4" />
+                      <path d="m10 9 5 3-5 3Z" fill="currentColor" stroke="none" />
+                    </g>
+                  ) : (
+                    <path fill="currentColor" d="M16.5 2h-3v13a3.5 3.5 0 1 1-3-3.46V8.5a6.5 6.5 0 1 0 6 6.5V8.1a8.3 8.3 0 0 0 5 1.65v-3A5 5 0 0 1 16.5 2Z" />
+                  )}
+                </svg>
+                {profile.name}
+              </a>
+            ))}
+          </nav>
         </div>
       </footer>
     </div>
