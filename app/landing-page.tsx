@@ -682,7 +682,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
         <div className="max-w-7xl mx-auto px-4 text-center border-t border-zinc-900 pt-8">
           <p className="text-zinc-600 text-sm font-bold uppercase tracking-widest">Produzido por: Academia S12 | Sidão</p>
-          <p className="mt-3 text-sm text-zinc-400">Academia S12 é a escola de goleiros com a metodologia do Sidão, no sidao12.com.br.</p>
+          <p className="mt-3 text-sm text-zinc-400">Academia S12 é a escola de goleiros com a metodologia do Sidão e integra o projeto Sidão 12.</p>
         </div>
       </footer>
     </div>

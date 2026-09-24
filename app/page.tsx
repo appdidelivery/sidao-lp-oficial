@@ -1,5 +1,5 @@
 import AcademiaS12LandingPage from "./landing-page";
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "./site-config";
+import { HUB_URL, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "./site-config";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -14,9 +14,9 @@ const structuredData = {
     },
     {
       "@type": "Person",
-      "@id": `${SITE_URL}/#sidao`,
+      "@id": `${HUB_URL}/#sidao`,
       name: "Sidão",
-      url: `${SITE_URL}/#historia`,
+      url: HUB_URL,
       image: `${SITE_URL}/sidao-goleiro.png`,
       description: "Goleiro e responsável pela metodologia de treinamento da Academia S12.",
       sameAs: ["https://pt.wikipedia.org/wiki/Sid%C3%A3o_(futebolista)"],
@@ -28,7 +28,17 @@ const structuredData = {
       url: SITE_URL,
       inLanguage: "pt-BR",
       publisher: { "@id": `${SITE_URL}/#organization` },
-      about: [{ "@id": `${SITE_URL}/#sidao` }, { "@id": `${SITE_URL}/#organization` }],
+      isPartOf: { "@id": `${HUB_URL}/#website` },
+      about: [{ "@id": `${HUB_URL}/#sidao` }, { "@id": `${SITE_URL}/#organization` }],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${HUB_URL}/#website`,
+      name: "Sidão 12",
+      url: HUB_URL,
+      inLanguage: "pt-BR",
+      about: { "@id": `${HUB_URL}/#sidao` },
+      hasPart: { "@id": `${SITE_URL}/#website` },
     },
     {
       "@type": "WebPage",
@@ -40,7 +50,7 @@ const structuredData = {
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#organization` },
       mainEntity: { "@id": `${SITE_URL}/#organization` },
-      mentions: { "@id": `${SITE_URL}/#sidao` },
+      mentions: { "@id": `${HUB_URL}/#sidao` },
     },
     {
       "@type": "ItemList",
@@ -75,7 +85,7 @@ const structuredData = {
       name: course.name,
       description: course.description,
       provider: { "@id": `${SITE_URL}/#organization` },
-      author: { "@id": `${SITE_URL}/#sidao` },
+      author: { "@id": `${HUB_URL}/#sidao` },
       inLanguage: "pt-BR",
       url: `${SITE_URL}/#${course.id}`,
     })),
