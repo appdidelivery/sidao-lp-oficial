@@ -23,6 +23,7 @@ const CART_OPEN = false;
 const COURSES_DATA = [
   {
     id: 0,
+    anchor: "curso-amadores",
     type: "Amador",
     title: "Goleiros Amadores",
     icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
@@ -38,6 +39,7 @@ const COURSES_DATA = [
   },
   {
     id: 1,
+    anchor: "curso-base",
     type: "Base",
     title: "Atletas de Base",
     icon: <Trophy className="w-8 h-8 text-amber-500" />,
@@ -53,6 +55,7 @@ const COURSES_DATA = [
   },
   {
     id: 2,
+    anchor: "curso-preparadores",
     type: "Preparador",
     title: "Preparador de Goleiros",
     icon: <Brain className="w-8 h-8 text-amber-500" />,
@@ -351,11 +354,25 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
           <div className="pt-8 border-t border-zinc-800/50 mt-8 flex flex-col gap-3 items-center md:items-start">
             <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Vivência Real de Alto Nível:</span>
-            <div className="flex gap-6 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-               <Image src="/escudo-spfc.png" alt="São Paulo FC" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="São Paulo FC" />
-               <Image src="/escudo-bfr.png" alt="Botafogo" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Botafogo" />
-               <Image src="/escudo-crvg.png" alt="Vasco da Gama" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Vasco" />
-               <Image src="/escudo-gec.png" alt="Goiás" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Goiás" />
+            <div className="flex flex-wrap justify-center md:justify-start gap-6 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+               <a href="https://www.saopaulofc.net/destaque-em-2016-sidao-reforca-a-meta-tricolor/" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no São Paulo FC (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
+                 <Image src="/escudo-spfc.png" alt="Sidão no São Paulo FC" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="São Paulo FC" />
+               </a>
+               <a href="https://www.botafogo.com.br/noticias/2457" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Botafogo (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
+                 <Image src="/escudo-bfr.png" alt="Sidão no Botafogo" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Botafogo" />
+               </a>
+               <a href="https://vasco.com.br/futebol/sidao-frisa-importancia-de-sao-januario-para-bons-resultados-no-brasileiro/" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Vasco da Gama (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
+                 <Image src="/escudo-crvg.png" alt="Sidão no Vasco da Gama" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Vasco" />
+               </a>
+               <a href="https://www.goiasec.com.br/noticias/sidao-e-oficialmente-apresentado-pelo-verdao" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Goiás (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
+                 <Image src="/escudo-gec.png" alt="Sidão no Goiás" width={40} height={40} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Goiás" />
+               </a>
+               <a href="https://paranaclube.com.br/goleiro-sidao-e-o-novo-reforco-do-parana-clube/" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Paraná Clube (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
+                 <Image src="/escudo-parana.png" alt="Sidão no Paraná Clube" width={269} height={500} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Paraná Clube" />
+               </a>
+               <a href="https://figueirense.com.br/apresentacao-oficial-goleiro-sidao/" target="_blank" rel="noopener noreferrer" aria-label="Leia sobre Sidão no Figueirense (abre em nova aba)" className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500">
+                 <Image src="/escudo-figueirense.svg" alt="Sidão no Figueirense Futebol Clube" width={1898} height={2200} className="h-10 w-auto object-contain drop-shadow-lg hover:scale-110 transition-transform" title="Figueirense" />
+               </a>
             </div>
           </div>
         </motion.div>
@@ -399,6 +416,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             {COURSES_DATA.map((item, idx) => (
               <motion.div 
                 key={idx}
+                id={item.anchor}
                 onClick={() => {
                   setActiveCourse(idx);
                   document.getElementById("modulos")?.scrollIntoView({ behavior: "smooth" });
@@ -664,6 +682,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
         <div className="max-w-7xl mx-auto px-4 text-center border-t border-zinc-900 pt-8">
           <p className="text-zinc-600 text-sm font-bold uppercase tracking-widest">Produzido por: Academia S12 | Sidão</p>
+          <p className="mt-3 text-sm text-zinc-400">Academia S12 é a escola de goleiros com a metodologia do Sidão, no sidao12.com.br.</p>
         </div>
       </footer>
     </div>

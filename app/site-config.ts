@@ -1,4 +1,4 @@
-export const SITE_URL = "https://sidao-lp-oficial.vercel.app";
-export const SITE_TITLE = "Academia S12 | Treinamento para Goleiros";
+export const SITE_URL = "https://sidao12.com.br";
+export const SITE_TITLE = "Academia S12 | Escola de Goleiros com Método Sidão";
 export const SITE_DESCRIPTION =
-  "Conheça a metodologia da Academia S12 com Sidão para goleiros amadores, atletas de base e preparadores de goleiros. Entre no grupo VIP.";
+  "Academia S12, escola de goleiros com a metodologia do Sidão. Cursos para goleiros amadores, atletas de base e preparadores. Entre no grupo VIP.";
