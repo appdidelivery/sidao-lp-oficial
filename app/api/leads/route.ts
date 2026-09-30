@@ -33,7 +33,6 @@ export async function POST(request: Request) {
   const whatsapp = typeof fields.whatsapp === "string" ? fields.whatsapp.trim() : "";
   const perfil = fields.perfil;
   const diagnosticoId = typeof fields.diagnosticoId === "string" ? fields.diagnosticoId.trim().slice(0, 120) : "";
-  const progressoId = typeof fields.progressoId === "string" ? fields.progressoId.trim().slice(0, 120) : "";
   const focoDiagnostico = typeof fields.focoDiagnostico === "string" ? fields.focoDiagnostico.trim().slice(0, 80) : "";
   const nivelDiagnostico = typeof fields.nivelDiagnostico === "string" ? fields.nivelDiagnostico.trim().slice(0, 80) : "";
   const digits = whatsapp.replace(/\D/g, "");
@@ -48,7 +47,6 @@ export async function POST(request: Request) {
       perfil,
       origem: "Landing Page S12",
       diagnosticoId: diagnosticoId || null,
-      progressoId: progressoId || null,
       focoDiagnostico: focoDiagnostico || null,
       nivelDiagnostico: nivelDiagnostico || null,
       redirecionadoGrupoVip: true,
