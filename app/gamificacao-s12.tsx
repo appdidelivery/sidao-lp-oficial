@@ -4,6 +4,7 @@ import { Brain, CheckCircle2, ShieldCheck, Trophy } from "lucide-react";
 
 type Props = {
   recommendedFocus?: string | null;
+  progressActive?: boolean;
 };
 
 const PHASES = [
@@ -37,7 +38,7 @@ const PHASES = [
   },
 ];
 
-export default function GamificacaoS12({ recommendedFocus }: Props) {
+export default function GamificacaoS12({ recommendedFocus, progressActive = false }: Props) {
   return (
     <section id="desafios" className="py-24 bg-zinc-950 border-y border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -53,11 +54,11 @@ export default function GamificacaoS12({ recommendedFocus }: Props) {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
             <div>
               <p className="text-sm font-bold uppercase tracking-widest text-zinc-500">Mapa de Evolução S12</p>
-              <h3 className="mt-2 text-2xl font-black text-white">Progresso individual, não ranking público</h3>
+              <h3 className="mt-2 text-2xl font-black text-white">{progressActive ? "Seu mapa foi ativado no diagnóstico" : "Progresso individual, não ranking público"}</h3>
               <p className="mt-2 text-zinc-400">O foco é completar desafios e melhorar o próprio desempenho. Cada desafio possui nível Essencial e Base/Performance.</p>
             </div>
             <div className="min-w-48">
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-zinc-500 mb-2"><span>Início</span><span>0/12</span></div>
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-zinc-500 mb-2"><span>{progressActive ? "Mapa ativo" : "Início"}</span><span>0/12</span></div>
               <div className="h-3 rounded-full bg-zinc-800 overflow-hidden">
                 <div className="h-full w-[8%] bg-amber-500" />
               </div>
