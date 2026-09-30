@@ -124,7 +124,25 @@ export async function POST(request: Request) {
       criadoEm: serverTimestamp(),
     });
 
-    return NextResponse.json({ success: true, id: docRef.id, foco, nivel });
+    const progressoRef = await addDoc(collection(db, "progresso_s12"), {
+      diagnosticoId: docRef.id,
+      focoInicial: foco,
+      nivel,
+      totalDesafios: 12,
+      desafiosConcluidos: [],
+      checkpointAtual: 0,
+      progressoPercentual: 0,
+      criadoEm: serverTimestamp(),
+      atualizadoEm: serverTimestamp(),
+    });
+
+    return NextResponse.json({
+      success: true,
+      id: docRef.id,
+      progressoId: progressoRef.id,
+      foco,
+      nivel,
+    });
   } catch (error: unknown) {
     console.error("Erro ao salvar diagnóstico no Firestore:", error);
     return NextResponse.json({ error: "Falha ao salvar o diagnóstico." }, { status: 500 });
