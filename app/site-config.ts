@@ -5,6 +5,6 @@ export const SOCIAL_PROFILES = [
   { name: "YouTube", url: "https://www.youtube.com/@AcademiaS12", icon: "youtube" },
   { name: "TikTok", url: "https://www.tiktok.com/@academia.s12", icon: "tiktok" },
 ] as const;
-export const SITE_TITLE = "Academia S12 | Escola de Goleiros com Método Sidão";
+export const SITE_TITLE = "Jornada S12 | 12 Semanas para Evoluir no Gol";
 export const SITE_DESCRIPTION =
-  "Academia S12, escola de goleiros com a metodologia do Sidão. Cursos para goleiros amadores, atletas de base e preparadores. Entre no grupo VIP.";
+  "Jornada S12 da Academia S12: 12 semanas de evolução técnica, leitura de jogo e Blindagem Mental para goleiros amadores e atletas de base. Entre no grupo VIP.";
