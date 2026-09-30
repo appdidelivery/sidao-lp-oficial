@@ -5,6 +5,7 @@ import { CheckCircle2, ChevronLeft, ChevronRight, ShieldCheck } from "lucide-rea
 
 type DiagnosticResult = {
   id: string;
+  progressoId: string;
   foco: string;
   nivel: string;
 };
@@ -158,7 +159,7 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props) {
       const data = await response.json();
       if (!response.ok) throw new Error(data?.error || "Não foi possível concluir.");
 
-      const diagnosticResult = { id: data.id, foco: data.foco, nivel: data.nivel };
+      const diagnosticResult = { id: data.id, progressoId: data.progressoId, foco: data.foco, nivel: data.nivel };
       setResult(diagnosticResult);
       onCompleted(diagnosticResult);
     } catch (err) {
