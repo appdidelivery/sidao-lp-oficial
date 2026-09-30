@@ -54,42 +54,20 @@ const structuredData = {
       mentions: { "@id": `${HUB_URL}/#sidao` },
     },
     {
-      "@type": "ItemList",
-      "@id": `${SITE_URL}/#cursos`,
-      name: "Cursos da Academia S12",
-      numberOfItems: 3,
-      itemListElement: ["curso-amadores", "curso-base", "curso-preparadores"].map((id, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: { "@id": `${SITE_URL}/#${id}` },
-      })),
-    },
-    ...[
-      {
-        id: "curso-amadores",
-        name: "Goleiros Amadores",
-        description: "Fundamentos de posicionamento, pegada, segurança e preparação mental para goleiros amadores.",
-      },
-      {
-        id: "curso-base",
-        name: "Atletas de Base",
-        description: "Jogo com os pés, leitura tática, explosão e preparação mental para atletas de base.",
-      },
-      {
-        id: "curso-preparadores",
-        name: "Preparador de Goleiros",
-        description: "Periodização de treinos, técnica, tomada de decisão e liderança para preparadores de goleiros.",
-      },
-    ].map((course) => ({
       "@type": "Course",
-      "@id": `${SITE_URL}/#${course.id}`,
-      name: course.name,
-      description: course.description,
+      "@id": `${SITE_URL}/#jornada-s12`,
+      name: "Jornada S12 — 12 Semanas para Evoluir no Gol",
+      description: "Jornada de 12 semanas com fundamentos, jogo com os pés, leitura, tomada de decisão e Blindagem Mental S12 para goleiros amadores e atletas de base.",
       provider: { "@id": `${SITE_URL}/#organization` },
       author: { "@id": `${HUB_URL}/#sidao` },
       inLanguage: "pt-BR",
-      url: `${SITE_URL}/#${course.id}`,
-    })),
+      url: `${SITE_URL}/#cursos`,
+      educationalLevel: "Formação esportiva",
+      audience: [
+        { "@type": "Audience", audienceType: "Goleiros amadores" },
+        { "@type": "Audience", audienceType: "Atletas de base e seus responsáveis" },
+      ],
+    },
   ],
 };
 
