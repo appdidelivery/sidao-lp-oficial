@@ -4,7 +4,6 @@ import { Brain, CheckCircle2, ShieldCheck, Trophy } from "lucide-react";
 
 type Props = {
   recommendedFocus?: string | null;
-  progressActive?: boolean;
 };
 
 const PHASES = [
@@ -38,27 +37,27 @@ const PHASES = [
   },
 ];
 
-export default function GamificacaoS12({ recommendedFocus, progressActive = false }: Props) {
+export default function GamificacaoS12({ recommendedFocus }: Props) {
   return (
     <section id="desafios" className="py-24 bg-zinc-950 border-y border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-12">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-500 mb-3">Gamificação S12</p>
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-500 mb-3">Depois da matrícula</p>
           <h2 className="text-3xl md:text-5xl font-black uppercase text-white">12 semanas. 12 desafios. 4 checkpoints.</h2>
           <p className="mt-4 text-zinc-400 max-w-3xl mx-auto">
-            Cada semana termina com um Desafio S12. O aluno acompanha a própria evolução, libera um checkpoint ao fim de cada fase e mantém o foco no próximo passo.
+            Esta é uma prévia da experiência do aluno. A gamificação oficial começa após a compra, dentro da Hotmart: aula, aplicação, Desafio S12, check-in e avanço semanal.
           </p>
         </div>
 
         <div className="mb-10 rounded-2xl border border-zinc-800 bg-[#0c0d13] p-6 md:p-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
             <div>
-              <p className="text-sm font-bold uppercase tracking-widest text-zinc-500">Mapa de Evolução S12</p>
-              <h3 className="mt-2 text-2xl font-black text-white">{progressActive ? "Seu mapa foi ativado no diagnóstico" : "Progresso individual, não ranking público"}</h3>
-              <p className="mt-2 text-zinc-400">O foco é completar desafios e melhorar o próprio desempenho. Cada desafio possui nível Essencial e Base/Performance.</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-zinc-500">Prévia do Mapa de Evolução S12</p>
+              <h3 className="mt-2 text-2xl font-black text-white">Seu progresso oficial começa na Hotmart</h3>
+              <p className="mt-2 text-zinc-400">No PPL você recebe diagnóstico e missões de aquecimento. Depois da matrícula, os 12 desafios passam a contar oficialmente para checkpoints e conclusão.</p>
             </div>
             <div className="min-w-48">
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-zinc-500 mb-2"><span>{progressActive ? "Mapa ativo" : "Início"}</span><span>0/12</span></div>
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-zinc-500 mb-2"><span>Prévia</span><span>0/12 após matrícula</span></div>
               <div className="h-3 rounded-full bg-zinc-800 overflow-hidden">
                 <div className="h-full w-[8%] bg-amber-500" />
               </div>
