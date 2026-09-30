@@ -25,36 +25,19 @@ const CART_OPEN = false;
 const COURSES_DATA = [
   {
     id: 0,
-    anchor: "jornada-amadores",
-    type: "Amador",
-    title: "Jornada S12 — Goleiro Amador",
+    anchor: "jornada-s12",
+    type: "Jornada",
+    title: "Jornada S12 — 12 Semanas",
     icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
-    desc: "A mesma Jornada S12 aplicada à realidade de quem concilia trabalho, estudos e futebol. Treinos objetivos, evolução técnica e preparação mental sem depender de uma rotina profissional.",
+    desc: "Uma única jornada para goleiros amadores e atletas de base. O conteúdo central é o mesmo; o Diagnóstico S12 orienta o foco e cada semana ganha uma aplicação Essencial e um Desafio Base/Performance.",
     price: "29,64",
     totalPrice: "297,00",
     checkoutLink: null,
     modules: [
-      { title: "FASE 1 — Base Segura", lessons: ["Semana 1: diagnóstico, postura e ponto de partida", "Semana 2: pegada, quedas e segurança", "Semana 3: posicionamento, ângulo e tomada de espaço"] },
-      { title: "FASE 2 — Domínio do Gol", lessons: ["Semana 4: reflexo e reação", "Semana 5: decisões no 1x1", "Semana 6: bola aérea, tempo e confiança"] },
-      { title: "FASE 3 — Goleiro Moderno", lessons: ["Semana 7: jogo com os pés", "Semana 8: leitura de jogo e próxima decisão", "Semana 9: explosão, agilidade e aplicação prática"] },
-      { title: "FASE 4 — Blindagem Mental S12", lessons: ["Semana 10: PREPARAR — rotina, foco e energia", "Semana 11: CONTROLAR + AGIR — erro, pressão e próximo lance", "Semana 12: LIDERAR — comunicação e plano pessoal de evolução"] }
-    ]
-  },
-  {
-    id: 1,
-    anchor: "jornada-base",
-    type: "Base",
-    title: "Jornada S12 — Atleta de Base",
-    icon: <Trophy className="w-8 h-8 text-amber-500" />,
-    desc: "A Jornada S12 aplicada ao goleiro em formação: fundamentos, jogo moderno, leitura, rotina e blindagem mental para absorver melhor os treinos e evoluir com direção.",
-    price: "29,64",
-    totalPrice: "297,00",
-    checkoutLink: null,
-    modules: [
-      { title: "FASE 1 — Base Segura", lessons: ["Semana 1: diagnóstico e fundamentos do ponto de partida", "Semana 2: pegada, quedas e correções técnicas", "Semana 3: posicionamento, ângulo e ocupação do gol"] },
-      { title: "FASE 2 — Domínio do Gol", lessons: ["Semana 4: reflexo e reação", "Semana 5: leitura e execução no 1x1", "Semana 6: bola aérea, impulsão e tempo de bola"] },
-      { title: "FASE 3 — Goleiro Moderno", lessons: ["Semana 7: domínio orientado e jogo com os pés", "Semana 8: leitura tática e tomada de decisão", "Semana 9: explosão, agilidade e rotina de evolução"] },
-      { title: "FASE 4 — Blindagem Mental S12", lessons: ["Semana 10: PREPARAR — rotina, atenção e confiança", "Semana 11: CONTROLAR + AGIR — crítica, erro e próximo lance", "Semana 12: LIDERAR — comunicação, responsabilidade e plano de evolução"] }
+      { title: "FASE 1 — BASE SEGURA", lessons: ["Semana 1: Diagnóstico S12, postura e ponto de partida", "Semana 2: pegada, quedas e segurança sob diferentes estímulos", "Semana 3: posicionamento, ângulo e tomada de espaço"] },
+      { title: "FASE 2 — DOMÍNIO DO GOL", lessons: ["Semana 4: reflexo, reação e recuperação", "Semana 5: 1x1 — leitura, coragem e decisão", "Semana 6: bola aérea — tempo, impulsão e confiança"] },
+      { title: "FASE 3 — GOLEIRO MODERNO", lessons: ["Semana 7: jogo com os pés e domínio orientado", "Semana 8: leitura tática, cobertura e tomada de decisão", "Semana 9: explosão, agilidade e situações de jogo"] },
+      { title: "FASE 4 — BLINDAGEM MENTAL S12", lessons: ["Semana 10: PREPARAR — rotina, foco e energia", "Semana 11: CONTROLAR + AGIR — erro, crítica e próximo lance", "Semana 12: LIDERAR — comunicação e plano pessoal de evolução"] }
     ]
   }
 ];
@@ -398,8 +381,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       {/* SELEÇÃO DINÂMICA DE CURSOS */}
       <section id="cursos" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <SectionHeading subtitle="Uma única Jornada S12, com a mesma espinha dorsal e aplicação adaptada ao contexto de goleiros amadores e atletas de base.">
-            QUAL É O SEU CONTEXTO?
+          <SectionHeading subtitle="Uma única Jornada S12. O Diagnóstico S12 orienta o ponto de atenção e o nível do desafio, sem separar o produto em cursos diferentes.">
+            UMA JORNADA. DOIS NÍVEIS DE DESAFIO.
           </SectionHeading>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-pointer">
@@ -433,7 +416,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[150px] rounded-full pointer-events-none -z-10" />
         
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <SectionHeading subtitle={`12 semanas de evolução com aplicação focada em: ${currentCourse.title}`}>
+          <SectionHeading subtitle={`12 semanas de evolução técnica, leitura de jogo e Blindagem Mental S12`}>
             AS 12 SEMANAS DA JORNADA
           </SectionHeading>
 
@@ -572,7 +555,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                   O QUE VOCÊ VAI <span className="text-amber-500 underline decoration-amber-500/30">RECEBER</span>
                 </h3>
                 <ul className="space-y-4">
-                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso à Jornada S12 completa: {currentCourse.title}</li>
+                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso à Jornada S12 completa de 12 semanas</li>
                   <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Certificado de Conclusão Oficial</li>
                   <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Blindagem Mental S12 integrada à jornada</li>
                   <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Plano de evolução para continuar após as 12 semanas</li>
