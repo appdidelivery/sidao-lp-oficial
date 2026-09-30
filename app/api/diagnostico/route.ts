@@ -124,22 +124,9 @@ export async function POST(request: Request) {
       criadoEm: serverTimestamp(),
     });
 
-    const progressoRef = await addDoc(collection(db, "progresso_s12"), {
-      diagnosticoId: docRef.id,
-      focoInicial: foco,
-      nivel,
-      totalDesafios: 12,
-      desafiosConcluidos: [],
-      checkpointAtual: 0,
-      progressoPercentual: 0,
-      criadoEm: serverTimestamp(),
-      atualizadoEm: serverTimestamp(),
-    });
-
     return NextResponse.json({
       success: true,
       id: docRef.id,
-      progressoId: progressoRef.id,
       foco,
       nivel,
     });
