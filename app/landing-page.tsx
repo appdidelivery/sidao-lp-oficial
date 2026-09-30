@@ -84,7 +84,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
-  const [diagnosticResult, setDiagnosticResult] = useState<{ id: string; progressoId: string; foco: string; nivel: string } | null>(null);
+  const [diagnosticResult, setDiagnosticResult] = useState<{ id: string; foco: string; nivel: string } | null>(null);
 
   const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +97,6 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         body: JSON.stringify({
           ...formData,
           diagnosticoId: diagnosticResult?.id || "",
-          progressoId: diagnosticResult?.progressoId || "",
           focoDiagnostico: diagnosticResult?.foco || "",
           nivelDiagnostico: diagnosticResult?.nivel || "",
         }),
@@ -470,7 +469,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         </div>
       </section>
 
-      <GamificacaoS12 recommendedFocus={diagnosticResult?.foco || null} progressActive={Boolean(diagnosticResult?.progressoId)} />
+      <GamificacaoS12 recommendedFocus={diagnosticResult?.foco || null} />
 
       {/* REELS / CONTEÚDO DINÂMICO - VERSÃO RETENÇÃO DE LEAD */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
