@@ -5,7 +5,6 @@ import { CheckCircle2, ChevronLeft, ChevronRight, ShieldCheck } from "lucide-rea
 
 type DiagnosticResult = {
   id: string;
-  progressoId: string;
   foco: string;
   nivel: string;
 };
@@ -159,7 +158,7 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props) {
       const data = await response.json();
       if (!response.ok) throw new Error(data?.error || "Não foi possível concluir.");
 
-      const diagnosticResult = { id: data.id, progressoId: data.progressoId, foco: data.foco, nivel: data.nivel };
+      const diagnosticResult = { id: data.id, foco: data.foco, nivel: data.nivel };
       setResult(diagnosticResult);
       onCompleted(diagnosticResult);
     } catch (err) {
@@ -255,7 +254,7 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props) {
               </p>
               <h3 className="text-3xl md:text-4xl font-black uppercase text-white">{resultCopy.title}</h3>
               <p className="mt-4 text-lg leading-relaxed text-zinc-400 max-w-2xl mx-auto">{resultCopy.description}</p>
-              <p className="mt-4 text-sm text-zinc-500">Você percorre as 12 semanas completas. O diagnóstico apenas orienta onde colocar mais atenção e qual nível de desafio usar.</p>
+              <p className="mt-4 text-sm text-zinc-500">O diagnóstico orienta sua atenção durante o PPL. A Jornada S12 oficial, com 12 desafios e checkpoints, começa somente após a matrícula na Hotmart.</p>
 
               <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <button type="button" onClick={onJoinVip} className="rounded-md bg-amber-500 px-7 py-4 font-black uppercase text-zinc-950">Entrar no Grupo VIP</button>
