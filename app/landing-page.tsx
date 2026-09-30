@@ -17,6 +17,8 @@ import Image from "next/image";
 import VideoPreview from "./video-preview";
 import { SOCIAL_PROFILES } from "./site-config";
 import { useRouter } from "next/navigation";
+import DiagnosticoS12 from "./diagnostico-s12";
+import GamificacaoS12 from "./gamificacao-s12";
 
 const VIP_GROUP_URL = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTIU";
 const CART_OPEN = false;
@@ -82,6 +84,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
+  const [diagnosticResult, setDiagnosticResult] = useState<{ id: string; foco: string; nivel: string } | null>(null);
 
   const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +94,12 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          diagnosticoId: diagnosticResult?.id || "",
+          focoDiagnostico: diagnosticResult?.foco || "",
+          nivelDiagnostico: diagnosticResult?.nivel || "",
+        }),
       });
 
       if (response.ok) {
@@ -108,6 +116,10 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       alert("Erro de conexão. Verifique sua internet e tente novamente.");
       setIsSubmitting(false);
     }
+  };
+
+  const scrollToDiagnostic = () => {
+    document.getElementById("diagnostico")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleUnlock = async (e: React.FormEvent) => {
@@ -269,8 +281,9 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           
           {/* Menu Desktop */}
           <nav className="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-widest text-zinc-400 items-center">
-            <a href="#cursos" className="hover:text-amber-500 transition-colors">Jornada S12</a>
+            <a href="#diagnostico" className="hover:text-amber-500 transition-colors">Diagnóstico</a>
             <a href="#modulos" className="hover:text-amber-500 transition-colors">12 Semanas</a>
+            <a href="#desafios" className="hover:text-amber-500 transition-colors">Desafios</a>
             <a href="#historia" className="hover:text-amber-500 transition-colors">O Mentor</a>
             <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-6 text-sm ml-4" />
           </nav>
@@ -294,8 +307,9 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               exit={{ opacity: 0, y: -20 }}
               className="absolute top-20 left-0 w-full bg-[#090A0F] border-b border-zinc-800 flex flex-col p-6 gap-6 text-center shadow-2xl md:hidden"
             >
-              <a href="#cursos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Jornada S12</a>
+              <a href="#diagnostico" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Diagnóstico</a>
               <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">12 Semanas</a>
+              <a href="#desafios" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Desafios</a>
               <a href="#historia" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">O Mentor</a>
             </motion.div>
           )}
@@ -319,11 +333,12 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-            <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="ENTRAR NO GRUPO VIP" className="w-full sm:w-auto text-lg py-5 px-10" />
-            <span className="text-sm text-zinc-500 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" /> Acompanhe a abertura das inscrições
-            </span>
+            <ButtonCTA onClick={scrollToDiagnostic} text="FAZER DIAGNÓSTICO S12" className="w-full sm:w-auto text-lg py-5 px-10" />
+            <button type="button" onClick={() => setIsLeadFormOpen(true)} className="w-full sm:w-auto rounded-sm border border-zinc-700 px-7 py-5 text-sm font-bold uppercase tracking-wider text-zinc-300 hover:border-amber-500 hover:text-amber-400 transition-colors">Entrar direto no Grupo VIP</button>
           </div>
+          <p className="text-sm text-zinc-500 flex items-center justify-center md:justify-start gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-500" /> 7 perguntas · foco inicial · nível Essencial ou Base/Performance
+          </p>
 
           <div className="pt-8 border-t border-zinc-800/50 mt-8 flex flex-col gap-3 items-center md:items-start">
             <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Vivência Real de Alto Nível:</span>
@@ -378,6 +393,11 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         </motion.div>
       </section>
 
+      <DiagnosticoS12
+        onCompleted={(result) => setDiagnosticResult(result)}
+        onJoinVip={() => setIsLeadFormOpen(true)}
+      />
+
       {/* SELEÇÃO DINÂMICA DE CURSOS */}
       <section id="cursos" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -385,7 +405,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             UMA JORNADA. DOIS NÍVEIS DE DESAFIO.
           </SectionHeading>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-pointer">
+          <div className="grid grid-cols-1 max-w-3xl mx-auto gap-6 cursor-pointer">
             {COURSES_DATA.map((item, idx) => (
               <motion.div 
                 key={idx}
@@ -430,7 +450,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 className="bg-zinc-900/80 border border-zinc-800 rounded-sm overflow-hidden"
               >
                 <div className="p-4 md:p-6 flex items-center border-b border-zinc-800/50 bg-[#090A0F]">
-                  <span className="text-amber-500 font-bold mr-4">MÓDULO {idx + 1}</span>
+                  <span className="text-amber-500 font-bold mr-4">FASE {idx + 1}</span>
                   <h3 className="text-lg md:text-xl font-bold text-white uppercase">{mod.title}</h3>
                 </div>
                 <div className="p-4 md:p-6 bg-zinc-900/40">
@@ -448,6 +468,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           </div>
         </div>
       </section>
+
+      <GamificacaoS12 recommendedFocus={diagnosticResult?.foco || null} />
 
       {/* REELS / CONTEÚDO DINÂMICO - VERSÃO RETENÇÃO DE LEAD */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
