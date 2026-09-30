@@ -25,60 +25,46 @@ const CART_OPEN = false;
 const COURSES_DATA = [
   {
     id: 0,
-    anchor: "curso-amadores",
+    anchor: "jornada-amadores",
     type: "Amador",
-    title: "Goleiros Amadores",
+    title: "Jornada S12 — Goleiro Amador",
     icon: <ShieldCheck className="w-8 h-8 text-amber-500" />,
-    desc: "Acabe com a insegurança debaixo da trave. Aprenda posicionamento, firmeza na pegada e evite lesões bobas na várzea ou society.",
-    price: "19,66",
-    totalPrice: "197,00",
-    checkoutLink: null,
-    modules: [
-      { title: "A Base de Tudo: Posicionamento e Postura", lessons: ["A transição para o campo", "Biomecânica da queda e pegada em 'W'", "Encurtamento de ângulo e tempo de reação"] },
-      { title: "Segurança Total e Domínio", lessons: ["Tempo de bola aéreo básico", "Fechando o ângulo no 1x1", "Treino de impulsão"] },
-      { title: "A Mente Inabalável", lessons: ["Como lidar com a pressão de falhar na várzea", "Foco e concentração no jogo"] }
-    ]
-  },
-  {
-    id: 1,
-    anchor: "curso-base",
-    type: "Base",
-    title: "Atletas de Base",
-    icon: <Trophy className="w-8 h-8 text-amber-500" />,
-    desc: "Desenvolva o jogo com os pés e a leitura tática exigida pelos olheiros modernos. Blinde sua mente para passar nas peneiras.",
+    desc: "A mesma Jornada S12 aplicada à realidade de quem concilia trabalho, estudos e futebol. Treinos objetivos, evolução técnica e preparação mental sem depender de uma rotina profissional.",
     price: "29,64",
     totalPrice: "297,00",
     checkoutLink: null,
     modules: [
-      { title: "O Goleiro Moderno: Jogo com os Pés", lessons: ["Domínio orientado sob pressão", "Passes de ruptura e construção de jogadas", "Atuando como líbero na cobertura preventiva"] },
-      { title: "Explosão e Alto Rendimento", lessons: ["Treino de força explosiva", "Impulsão, socos e encaixes no alto", "Agilidade debaixo da trave"] },
-      { title: "Mentalidade de Peneira", lessons: ["Rotinas de pré-jogo de um atleta de elite", "Como blindar a mente contra críticas e olheiros"] }
+      { title: "FASE 1 — Base Segura", lessons: ["Semana 1: diagnóstico, postura e ponto de partida", "Semana 2: pegada, quedas e segurança", "Semana 3: posicionamento, ângulo e tomada de espaço"] },
+      { title: "FASE 2 — Domínio do Gol", lessons: ["Semana 4: reflexo e reação", "Semana 5: decisões no 1x1", "Semana 6: bola aérea, tempo e confiança"] },
+      { title: "FASE 3 — Goleiro Moderno", lessons: ["Semana 7: jogo com os pés", "Semana 8: leitura de jogo e próxima decisão", "Semana 9: explosão, agilidade e aplicação prática"] },
+      { title: "FASE 4 — Blindagem Mental S12", lessons: ["Semana 10: PREPARAR — rotina, foco e energia", "Semana 11: CONTROLAR + AGIR — erro, pressão e próximo lance", "Semana 12: LIDERAR — comunicação e plano pessoal de evolução"] }
     ]
   },
   {
-    id: 2,
-    anchor: "curso-preparadores",
-    type: "Preparador",
-    title: "Preparador de Goleiros",
-    icon: <Brain className="w-8 h-8 text-amber-500" />,
-    desc: "Acesse uma metodologia validada na Série A. Aprenda a periodizar treinos que unem técnica, explosão e tomada de decisão.",
-    price: "49,60",
-    totalPrice: "497,00",
+    id: 1,
+    anchor: "jornada-base",
+    type: "Base",
+    title: "Jornada S12 — Atleta de Base",
+    icon: <Trophy className="w-8 h-8 text-amber-500" />,
+    desc: "A Jornada S12 aplicada ao goleiro em formação: fundamentos, jogo moderno, leitura, rotina e blindagem mental para absorver melhor os treinos e evoluir com direção.",
+    price: "29,64",
+    totalPrice: "297,00",
     checkoutLink: null,
     modules: [
-      { title: "Periodização Tática", lessons: ["Criando treinos cognitivos", "Gestão de carga e prevenção de lesão", "Como avaliar seus goleiros na prática"] },
-      { title: "O Método Diniz/Sidão", lessons: ["Como treinar o jogo com os pés no dia a dia", "Simulações de jogo real dentro da área", "Exercícios práticos documentados"] },
-      { title: "Liderança e Comunicação", lessons: ["A voz de comando do sistema defensivo", "Sinais não-verbais com a zaga", "Certificação de conclusão"] }
+      { title: "FASE 1 — Base Segura", lessons: ["Semana 1: diagnóstico e fundamentos do ponto de partida", "Semana 2: pegada, quedas e correções técnicas", "Semana 3: posicionamento, ângulo e ocupação do gol"] },
+      { title: "FASE 2 — Domínio do Gol", lessons: ["Semana 4: reflexo e reação", "Semana 5: leitura e execução no 1x1", "Semana 6: bola aérea, impulsão e tempo de bola"] },
+      { title: "FASE 3 — Goleiro Moderno", lessons: ["Semana 7: domínio orientado e jogo com os pés", "Semana 8: leitura tática e tomada de decisão", "Semana 9: explosão, agilidade e rotina de evolução"] },
+      { title: "FASE 4 — Blindagem Mental S12", lessons: ["Semana 10: PREPARAR — rotina, atenção e confiança", "Semana 11: CONTROLAR + AGIR — crítica, erro e próximo lance", "Semana 12: LIDERAR — comunicação, responsabilidade e plano de evolução"] }
     ]
   }
 ];
 
 const FAQS = [
-  { question: "O curso serve para quem joga apenas no final de semana?", answer: "Sim. A metodologia foi adaptada para que fundamentos de elite possam ser aplicados por quem tem pouco tempo para treinar, focando em segurança e prevenção de lesões." },
-  { question: "Sou preparador de goleiros. O que vou aprender?", answer: "Você terá acesso a exercícios práticos e à periodização de treinos voltada para o futebol moderno (jogo com os pés e cognitivo), agregando valor imenso às suas aulas." },
-  { question: "Como acesso as aulas?", answer: "Assim que o pagamento for aprovado, você receberá um e-mail com seu login e senha para acessar a área de membros exclusiva de qualquer dispositivo." },
-  { question: "E se eu não gostar?", answer: "Você tem 7 dias de garantia incondicional amparada por lei. Se achar que não é para você, basta um clique na plataforma para receber 100% do seu dinheiro de volta." }
-];
+  { question: "A Jornada S12 serve para quem joga apenas no final de semana?", answer: "Sim. O goleiro amador segue a mesma jornada, com aplicação adaptada à rotina de quem tem pouco tempo para treinar e precisa priorizar fundamentos que realmente consegue praticar." },
+  { question: "A Jornada S12 serve para atletas de base?", answer: "Sim. A trilha de base trabalha fundamentos, jogo com os pés, leitura, tomada de decisão e preparação mental. Se o atleta for menor de idade, o cadastro e a compra devem ser feitos pelo responsável." },
+  { question: "Como funciona a Jornada S12?", answer: "São 12 semanas organizadas em quatro fases: Base Segura, Domínio do Gol, Goleiro Moderno e Blindagem Mental S12. Cada etapa combina explicação, demonstração, aplicação e um próximo passo prático." },
+  { question: "Como acesso as aulas?", answer: "Quando as inscrições abrirem e o pagamento for aprovado, você receberá as orientações de acesso à área de membros e à sequência da Jornada S12." }
+]
 
 const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
   <div className="text-center mb-12 md:mb-16">
@@ -199,8 +185,9 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 <option value="" disabled className="text-zinc-700">Selecione uma opção...</option>
                 <option value="Goleiro Amador">Goleiro Amador</option>
                 <option value="Atleta de Base">Atleta de Base</option>
-                <option value="Preparador de Goleiros / Físico">Preparador de Goleiros / Físico</option>
+                <option value="Pai / Responsável">Pai / Responsável</option>
               </select>
+              <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">Se o atleta for menor de idade, o cadastro deve ser feito pelo pai, mãe ou responsável.</p>
             </div>
 
             <button 
@@ -299,8 +286,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
           
           {/* Menu Desktop */}
           <nav className="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-widest text-zinc-400 items-center">
-            <a href="#cursos" className="hover:text-amber-500 transition-colors">Cursos</a>
-            <a href="#modulos" className="hover:text-amber-500 transition-colors">Módulos</a>
+            <a href="#cursos" className="hover:text-amber-500 transition-colors">Jornada S12</a>
+            <a href="#modulos" className="hover:text-amber-500 transition-colors">12 Semanas</a>
             <a href="#historia" className="hover:text-amber-500 transition-colors">O Mentor</a>
             <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-6 text-sm ml-4" />
           </nav>
@@ -324,8 +311,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               exit={{ opacity: 0, y: -20 }}
               className="absolute top-20 left-0 w-full bg-[#090A0F] border-b border-zinc-800 flex flex-col p-6 gap-6 text-center shadow-2xl md:hidden"
             >
-              <a href="#cursos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Cursos</a>
-              <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Módulos</a>
+              <a href="#cursos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Jornada S12</a>
+              <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">12 Semanas</a>
               <a href="#historia" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">O Mentor</a>
             </motion.div>
           )}
@@ -338,14 +325,14 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
         <motion.div initial={false} className="flex-1 space-y-6 text-center md:text-left">
           <div className="inline-block border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
-            A Metodologia Oficial do Camisa 12
+            Jornada S12 · técnica, leitura e blindagem mental
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase leading-[0.9]" style={{ fontFamily: 'Impact, sans-serif, system-ui' }}>
-            DOMINE A GRANDE ÁREA. <br />
+            EVOLUA NO GOL COM DIREÇÃO. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">SEJA INABALÁVEL.</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-400 max-w-xl mx-auto md:mx-0">
-            Aprenda técnica de elite, o jogo moderno com os pés e a <strong>blindagem mental</strong> com quem viveu a pressão extrema nos maiores clubes do Brasil.
+            Uma jornada de 12 semanas para goleiros amadores e atletas de base desenvolverem fundamentos, leitura de jogo, jogo com os pés e <strong>Blindagem Mental S12</strong> com aplicação prática.
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
@@ -411,8 +398,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       {/* SELEÇÃO DINÂMICA DE CURSOS */}
       <section id="cursos" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <SectionHeading subtitle="A metodologia S12 foi desenhada para atuar nas três esferas principais da posição. Selecione seu perfil.">
-            QUAL É O SEU ALVO?
+          <SectionHeading subtitle="Uma única Jornada S12, com a mesma espinha dorsal e aplicação adaptada ao contexto de goleiros amadores e atletas de base.">
+            QUAL É O SEU CONTEXTO?
           </SectionHeading>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-pointer">
@@ -433,7 +420,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 <p className="text-zinc-400 leading-relaxed flex-grow">{item.desc}</p>
                 
                 <div className={`mt-8 block w-full text-center py-3 px-4 font-bold uppercase text-sm rounded transition-colors duration-300 ${activeCourse === idx ? 'bg-amber-500 text-zinc-950' : 'border border-amber-500/50 text-amber-400 hover:bg-amber-500 hover:text-zinc-950'}`}>
-                  {activeCourse === idx ? 'Módulos Selecionados' : 'Ver Detalhes do Curso'}
+                  {activeCourse === idx ? 'Jornada selecionada' : 'Ver aplicação da Jornada'}
                 </div>
               </motion.div>
             ))}
@@ -446,8 +433,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[150px] rounded-full pointer-events-none -z-10" />
         
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <SectionHeading subtitle={`Conteúdo Exclusivo focado em: ${currentCourse.title}`}>
-            O QUE VOCÊ VAI RECEBER
+          <SectionHeading subtitle={`12 semanas de evolução com aplicação focada em: ${currentCourse.title}`}>
+            AS 12 SEMANAS DA JORNADA
           </SectionHeading>
 
           <div className="space-y-4">
@@ -585,11 +572,11 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                   O QUE VOCÊ VAI <span className="text-amber-500 underline decoration-amber-500/30">RECEBER</span>
                 </h3>
                 <ul className="space-y-4">
-                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso aos Módulos Exclusivos: {currentCourse.title}</li>
+                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso à Jornada S12 completa: {currentCourse.title}</li>
                   <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Certificado de Conclusão Oficial</li>
-                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Bônus: Módulo Mentalidade Blindada</li>
-                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Acesso de 1 Ano a todas as atualizações</li>
-                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Suporte tira-dúvidas na plataforma</li>
+                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Blindagem Mental S12 integrada à jornada</li>
+                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Plano de evolução para continuar após as 12 semanas</li>
+                  <li className="flex items-center text-zinc-300 font-medium"><ChevronRight className="w-5 h-5 text-amber-500 mr-2 shrink-0" /> Conteúdo prático com aplicação para treino e jogo</li>
                 </ul>
               </div>
 
