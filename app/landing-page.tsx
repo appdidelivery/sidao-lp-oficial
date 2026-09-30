@@ -470,7 +470,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         </div>
       </section>
 
-      <GamificacaoS12 recommendedFocus={diagnosticResult?.foco || null} />
+      <GamificacaoS12 recommendedFocus={diagnosticResult?.foco || null} progressActive={Boolean(diagnosticResult?.progressoId)} />
 
       {/* REELS / CONTEÚDO DINÂMICO - VERSÃO RETENÇÃO DE LEAD */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
