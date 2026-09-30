@@ -16,7 +16,7 @@ const db = getFirestore(app);
 const allowedProfiles = new Set([
   "Goleiro Amador",
   "Atleta de Base",
-  "Preparador de Goleiros / Físico",
+  "Pai / Responsável",
 ]);
 
 export async function POST(request: Request) {
