@@ -80,7 +80,7 @@ export default function Page() {
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
-      <AcademiaS12LandingPage unlocked />
+      <AcademiaS12LandingPage />
     </>
   );
 }
