@@ -42,6 +42,14 @@ export default function GamificacaoS12({ recommendedFocus }: Props) {
   const [focus, setFocus] = useState<string | null>(recommendedFocus ?? null);
 
   useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("s12:diagnostic");
+      if (stored) {
+        const saved = JSON.parse(stored) as { foco?: string };
+        if (saved.foco) setFocus(saved.foco);
+      }
+    } catch {}
+
     const syncFocus = (event: Event) => {
       const custom = event as CustomEvent<{ foco?: string }>;
       setFocus(custom.detail?.foco || null);
