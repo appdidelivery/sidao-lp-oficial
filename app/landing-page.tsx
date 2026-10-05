@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { SOCIAL_PROFILES } from "./site-config";
-import DiagnosticoS12 from "./diagnostico-s12";
-import GamificacaoS12 from "./gamificacao-s12";
+import DeferredDiagnosticoS12 from "./deferred-diagnostico-s12";
+import DeferredGamificacaoS12 from "./deferred-gamificacao-s12";
 import AcademiaHeader from "./academy-header";
 import VipLeadModal, { VipOpenButton } from "./vip-lead";
 import YoutubeTrailer from "./youtube-trailer";
@@ -115,7 +115,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      <DiagnosticoS12 />
+      <DeferredDiagnosticoS12 />
 
       {/* SELEÇÃO DINÂMICA DE CURSOS */}
       <section id="cursos" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
@@ -177,7 +177,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      <GamificacaoS12 />
+      <DeferredGamificacaoS12 />
 
       {/* REELS / CONTEÚDO DINÂMICO - VERSÃO RETENÇÃO DE LEAD */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
