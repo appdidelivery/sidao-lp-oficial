@@ -14,8 +14,8 @@ export default function VipLeadModal() {
   useEffect(() => {
     const openModal = () => setOpen(true);
     const delegatedClick = (event: MouseEvent) => {
-      const target = event.target as Element | null;
-      if (target?.closest("[data-s12-vip-open]")) setOpen(true);
+      const target = event.target;
+      if (target instanceof Element && target.closest("[data-s12-vip-open]")) setOpen(true);
     };
     window.addEventListener("s12:vip-open", openModal);
     document.addEventListener("click", delegatedClick);
