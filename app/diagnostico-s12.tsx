@@ -180,7 +180,7 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props = {}) {
   };
 
   return (
-    <section id="diagnostico" className="py-24 bg-[#090A0F] border-y border-zinc-900">
+    <section id="diagnostico-conteudo" className="py-24 bg-[#090A0F] border-y border-zinc-900">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         <div className="text-center mb-10">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-500 mb-3">Diagnóstico S12</p>
