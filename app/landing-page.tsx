@@ -5,17 +5,14 @@ import {
   ShieldCheck, 
   Play,
   Brain, 
-  Trophy, 
-  ChevronDown, 
+  Trophy,
   CheckCircle2, 
   ChevronRight,
   Menu, // Ícone do menu mobile
   X // Ícone para fechar o menu mobile
 } from "lucide-react";
 import Image from "next/image";
-import VideoPreview from "./video-preview";
 import { SOCIAL_PROFILES } from "./site-config";
-import { useRouter } from "next/navigation";
 import DiagnosticoS12 from "./diagnostico-s12";
 import GamificacaoS12 from "./gamificacao-s12";
 
@@ -43,6 +40,8 @@ const COURSES_DATA = [
   }
 ];
 
+const currentCourse = COURSES_DATA[0];
+
 const FAQS = [
   { question: "A Jornada S12 serve para quem joga apenas no final de semana?", answer: "Sim. O goleiro amador segue a mesma jornada, com aplicação adaptada à rotina de quem tem pouco tempo para treinar e precisa priorizar fundamentos que realmente consegue praticar." },
   { question: "A Jornada S12 serve para atletas de base?", answer: "Sim. A trilha de base trabalha fundamentos, jogo com os pés, leitura, tomada de decisão e preparação mental. Se o atleta for menor de idade, o cadastro e a compra devem ser feitos pelo responsável." },
@@ -63,38 +62,26 @@ const ButtonCTA = ({ text = "Entrar no Grupo VIP", className = "", onClick }: { 
   </button>
 );
 
-export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean }) {
-  const router = useRouter();
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+export default function AcademiaS12LandingPage() {
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
-  const [activeCourse, setActiveCourse] = useState(0);
-  const currentCourse = COURSES_DATA[activeCourse];
-  
-  // ESTADOS NOVOS: Menu Mobile e Bloqueio de Senha
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [passwordInput, setPasswordInput] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-
-  // --- ESTADOS DO NOVO FORMULÁRIO DE CAPTURA (INTEGRADO API) ---
-  const [formData, setFormData] = useState({
-    nome: '',
-    whatsapp: '',
-    perfil: ''
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
   const [diagnosticResult, setDiagnosticResult] = useState<{ id: string; foco: string; nivel: string } | null>(null);
 
-  const handleSubmitLead = async (e: React.FormEvent) => {
+  const handleSubmitLead = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const data = new FormData(e.currentTarget);
 
     try {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
+          nome: String(data.get("nome") || ""),
+          whatsapp: String(data.get("whatsapp") || ""),
+          perfil: String(data.get("perfil") || ""),
           diagnosticoId: diagnosticResult?.id || "",
           focoDiagnostico: diagnosticResult?.foco || "",
           nivelDiagnostico: diagnosticResult?.nivel || "",
@@ -121,20 +108,6 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
     document.getElementById("diagnostico")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const handleUnlock = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setPasswordError(false);
-    const response = await fetch("/api/team-access", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: passwordInput }),
-    });
-    if (response.ok) {
-      router.refresh();
-    } else {
-      setPasswordError(true);
-    }
-  };
 
   const leadForm = (
           <form onSubmit={handleSubmitLead} className="flex flex-col gap-4 text-left">
@@ -142,11 +115,11 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               <label htmlFor="nome" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Seu Nome</label>
               <input 
                 id="nome"
-                type="text" 
+                name="nome"
+                type="text"
+                autoComplete="name"
                 required
                 placeholder="Ex: Taffarel"
-                value={formData.nome}
-                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
                 disabled={isSubmitting}
               />
@@ -156,11 +129,12 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               <label htmlFor="whatsapp" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">WhatsApp (com DDD)</label>
               <input 
                 id="whatsapp"
-                type="tel" 
+                name="whatsapp"
+                type="tel"
+                autoComplete="tel"
+                inputMode="tel"
                 required
                 placeholder="Ex: 11 99999-9999"
-                value={formData.whatsapp}
-                onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                 className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
                 disabled={isSubmitting}
               />
@@ -170,9 +144,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               <label htmlFor="perfil" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Qual é o seu perfil?</label>
               <select 
                 id="perfil"
+                name="perfil"
                 required
-                value={formData.perfil}
-                onChange={(e) => setFormData({ ...formData, perfil: e.target.value })}
                 className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none"
                 disabled={isSubmitting}
               >
@@ -200,42 +173,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
   );
 
-  // --- TELA DE BLOQUEIO (GATEKEEPER) - CAPTURA DE LEADS ---
-  if (!unlocked) {
-    return (
-      <div className="min-h-screen bg-[#090A0F] text-zinc-300 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
-        
-        <div 
-          className="bg-zinc-900/80 border border-zinc-800 p-8 rounded-2xl max-w-lg w-full text-center z-10 shadow-2xl backdrop-blur-sm"
-        >
-          <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={48} className="h-12 w-auto mx-auto mb-6 object-contain" />
-          
-          <h2 className="text-3xl font-black text-white uppercase mb-2" style={{ fontFamily: 'Impact' }}>
-            LISTA VIP <span className="text-amber-500">S12</span>
-          </h2>
-          <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
-            Garanta sua vaga na lista de espera preenchendo os dados abaixo.
-          </p>
-          
-          {leadForm}
-          {/* Mantivemos o formulário da equipe pequeno no rodapé */}
-          <form onSubmit={handleUnlock} className="mt-8 pt-6 border-t border-zinc-800/50 flex flex-col gap-2">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1">Acesso Restrito</p>
-            <input 
-              type="password" 
-              placeholder="Senha de Equipe"
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
-              className={`w-full bg-transparent border-b ${passwordError ? 'border-red-500' : 'border-zinc-800'} p-2 text-center text-xs text-zinc-500 focus:outline-none focus:border-amber-500 focus:text-white transition-colors`}
-            />
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  // --- O SITE REAL (Se a senha estiver correta) ---
+  
   return (
     <div className="min-h-screen bg-[#090A0F] text-zinc-300 font-sans selection:bg-amber-500 selection:text-black overflow-x-hidden">
 
@@ -393,28 +331,20 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             UMA JORNADA. DOIS NÍVEIS DE DESAFIO.
           </SectionHeading>
 
-          <div className="grid grid-cols-1 max-w-3xl mx-auto gap-6 cursor-pointer">
-            {COURSES_DATA.map((item, idx) => (
-              <div 
-                key={idx}
-                id={item.anchor}
-                onClick={() => {
-                  setActiveCourse(idx);
-                  document.getElementById("modulos")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className={`p-8 rounded-lg transition-all duration-300 flex flex-col group ${activeCourse === idx ? 'bg-zinc-900 border-2 border-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.1)]' : 'bg-zinc-900/50 border border-zinc-800 hover:border-amber-500/50'}`}
-              >
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 border transition-colors ${activeCourse === idx ? 'bg-amber-500/10 border-amber-500' : 'bg-[#090A0F] border-zinc-800 group-hover:border-amber-500/30'}`}>
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 uppercase">{item.title}</h3>
-                <p className="text-zinc-400 leading-relaxed flex-grow">{item.desc}</p>
-                
-                <div className={`mt-8 block w-full text-center py-3 px-4 font-bold uppercase text-sm rounded transition-colors duration-300 ${activeCourse === idx ? 'bg-amber-500 text-zinc-950' : 'border border-amber-500/50 text-amber-400 hover:bg-amber-500 hover:text-zinc-950'}`}>
-                  {activeCourse === idx ? 'Jornada selecionada' : 'Ver aplicação da Jornada'}
-                </div>
+          <div className="grid grid-cols-1 max-w-3xl mx-auto gap-6">
+            <div
+              id={currentCourse.anchor}
+              className="p-8 rounded-lg flex flex-col bg-zinc-900 border-2 border-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.1)]"
+            >
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 border bg-amber-500/10 border-amber-500">
+                {currentCourse.icon}
               </div>
-            ))}
+              <h3 className="text-xl font-bold text-white mb-4 uppercase">{currentCourse.title}</h3>
+              <p className="text-zinc-400 leading-relaxed flex-grow">{currentCourse.desc}</p>
+              <a href="#modulos" className="mt-8 block w-full text-center py-3 px-4 font-bold uppercase text-sm rounded bg-amber-500 text-zinc-950">
+                Ver as 12 semanas
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -467,7 +397,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
             
             {/* VÍDEO 1 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <VideoPreview src="/reel-1.mp4" poster="/thumb-1.webp" title="Treino na prática 1 — Sidão" />
+              <video src="/reel-1.mp4" poster="/thumb-1.webp" aria-label="Treino na prática 1 — Sidão" controls preload="none" playsInline className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Melhorar seu treino</p>
               </div>
@@ -475,7 +405,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
             {/* VÍDEO 2 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <VideoPreview src="/reel-2.mp4" poster="/thumb-2.webp" title="Treino na prática 2 — Sidão" />
+              <video src="/reel-2.mp4" poster="/thumb-2.webp" aria-label="Treino na prática 2 — Sidão" controls preload="none" playsInline className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Saída com os pés</p>
               </div>
@@ -483,7 +413,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
             {/* VÍDEO 3 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <VideoPreview src="/reel-3.mp4" poster="/thumb-3.webp" title="Treino na prática 3 — Sidão" />
+              <video src="/reel-3.mp4" poster="/thumb-3.webp" aria-label="Treino na prática 3 — Sidão" controls preload="none" playsInline className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Gestos no treinamento</p>
               </div>
@@ -491,7 +421,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
             {/* VÍDEO 4 */}
             <div className="relative aspect-[9/16] bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-colors">
-              <VideoPreview src="/reel-4.mp4" poster="/thumb-4.webp" title="Treino na prática 4 — Sidão" />
+              <video src="/reel-4.mp4" poster="/thumb-4.webp" aria-label="Treino na prática 4 — Sidão" controls preload="none" playsInline className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent pointer-events-none">
                 <p className="text-white font-bold text-sm line-clamp-2 uppercase drop-shadow-md">Equilibrio e encaixe</p>
               </div>
@@ -611,19 +541,15 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
           <div className="space-y-4">
             {FAQS.filter((faq) => CART_OPEN || !["Como acesso as aulas?", "E se eu não gostar?"].includes(faq.question)).map((faq, idx) => (
-              <div key={idx} className="border border-zinc-800 bg-zinc-900/30 rounded-sm overflow-hidden">
-                <button onClick={() => setOpenFaq(openFaq === idx ? null : idx)} className="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-white uppercase hover:bg-zinc-800/50 transition-colors">
+              <details key={idx} className="group border border-zinc-800 bg-zinc-900/30 rounded-sm overflow-hidden">
+                <summary className="w-full cursor-pointer list-none px-6 py-4 flex items-center justify-between text-left font-bold text-white uppercase hover:bg-zinc-800/50 transition-colors">
                   {faq.question}
-                  <ChevronDown className={`w-5 h-5 text-amber-500 transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
-                </button>
-                
-                  {openFaq === idx && (
-                    <div className="px-6 text-zinc-400 pb-4 leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
-                
-              </div>
+                  <span aria-hidden="true" className="text-amber-500 text-xl transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <div className="px-6 text-zinc-400 pb-4 leading-relaxed">
+                  {faq.answer}
+                </div>
+              </details>
             ))}
           </div>
         </div>
