@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Brain, CheckCircle2, ShieldCheck, Trophy } from "lucide-react";
 
 type Props = {
@@ -38,6 +39,21 @@ const PHASES = [
 ];
 
 export default function GamificacaoS12({ recommendedFocus }: Props) {
+  const [focus, setFocus] = useState<string | null>(recommendedFocus ?? null);
+
+  useEffect(() => {
+    const syncFocus = (event: Event) => {
+      const custom = event as CustomEvent<{ foco?: string }>;
+      setFocus(custom.detail?.foco || null);
+    };
+    window.addEventListener("s12:diagnostic", syncFocus as EventListener);
+    return () => window.removeEventListener("s12:diagnostic", syncFocus as EventListener);
+  }, []);
+
+  useEffect(() => {
+    setFocus(recommendedFocus ?? null);
+  }, [recommendedFocus]);
+
   return (
     <section id="desafios" className="py-24 bg-zinc-950 border-y border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -68,7 +84,7 @@ export default function GamificacaoS12({ recommendedFocus }: Props) {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {PHASES.map((phase, index) => {
             const Icon = phase.icon;
-            const highlighted = recommendedFocus === phase.id;
+            const highlighted = focus === phase.id;
             return (
               <article key={phase.id} className={`relative rounded-2xl border p-6 transition-all ${highlighted ? "border-amber-500 bg-amber-500/5 shadow-[0_0_30px_rgba(245,158,11,0.08)]" : "border-zinc-800 bg-zinc-900/60"}`}>
                 {highlighted && <span className="absolute right-4 top-4 rounded-full bg-amber-500 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-zinc-950">Seu foco</span>}
