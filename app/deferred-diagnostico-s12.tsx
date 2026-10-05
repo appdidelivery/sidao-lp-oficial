@@ -25,7 +25,7 @@ export default function DeferredDiagnosticoS12() {
           observer.disconnect();
         }
       },
-      { rootMargin: "900px 0px" }
+      { rootMargin: "200px 0px" }
     );
     observer.observe(root.current);
     return () => observer.disconnect();
