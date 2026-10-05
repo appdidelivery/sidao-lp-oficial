@@ -160,6 +160,9 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props = {}) {
 
       const diagnosticResult = { id: data.id, foco: data.foco, nivel: data.nivel };
       setResult(diagnosticResult);
+      try {
+        sessionStorage.setItem("s12:diagnostic", JSON.stringify(diagnosticResult));
+      } catch {}
       window.dispatchEvent(new CustomEvent<DiagnosticResult>("s12:diagnostic", { detail: diagnosticResult }));
       onCompleted?.(diagnosticResult);
     } catch (err) {
