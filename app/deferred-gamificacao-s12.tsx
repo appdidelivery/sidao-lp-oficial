@@ -31,5 +31,5 @@ export default function DeferredGamificacaoS12() {
     return () => observer.disconnect();
   }, [ready]);
 
-  return <div ref={root}>{ready ? <GamificacaoS12 /> : <div className="min-h-[680px] bg-zinc-950" aria-hidden="true" />}</div>;
+  return <div id="desafios" ref={root} className="scroll-mt-24">{ready ? <GamificacaoS12 /> : <div className="min-h-[680px] bg-zinc-950" aria-hidden="true" />}</div>;
 }
