@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
-import { VipOpenButton } from "./vip-lead";
 
 export default function AcademiaHeader() {
   const [open, setOpen] = useState(false);
@@ -29,11 +28,11 @@ export default function AcademiaHeader() {
           <a href="#modulos" className="transition-colors hover:text-amber-500">12 Semanas</a>
           <a href="#desafios" className="transition-colors hover:text-amber-500">Desafios</a>
           <a href="#historia" className="transition-colors hover:text-amber-500">O Mentor</a>
-          <VipOpenButton text="Grupo VIP" className="ml-4 rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 px-6 py-2 text-sm font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.25)]" />
+          <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("s12:vip-open"))} className="ml-4 rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 px-6 py-2 text-sm font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.25)]">Grupo VIP</button>
         </nav>
 
         <div className="z-50 flex items-center gap-3 md:hidden">
-          <VipOpenButton text="Grupo VIP" className="rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-950" />
+          <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("s12:vip-open"))} className="rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-950">Grupo VIP</button>
           <button type="button" aria-label={open ? "Fechar menu" : "Abrir menu"} aria-expanded={open} aria-controls="menu-mobile" onClick={() => setOpen((value) => !value)} className="p-1 text-white">
             {open ? <X className="h-8 w-8 text-amber-500" /> : <Menu className="h-8 w-8" />}
           </button>
