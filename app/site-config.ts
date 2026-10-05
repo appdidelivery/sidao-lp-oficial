@@ -1,5 +1,5 @@
-export const SITE_URL = "https://academias12.com.br";
-export const HUB_URL = "https://sidao12.com.br";
+export const SITE_URL = "https://www.academias12.com.br";
+export const HUB_URL = "https://www.sidao12.com.br";
 export const SOCIAL_PROFILES = [
   { name: "Instagram", url: "https://www.instagram.com/academia.s12/", icon: "instagram" },
   { name: "YouTube", url: "https://www.youtube.com/@AcademiaS12", icon: "youtube" },
