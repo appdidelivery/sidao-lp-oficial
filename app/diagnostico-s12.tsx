@@ -10,8 +10,8 @@ type DiagnosticResult = {
 };
 
 type Props = {
-  onCompleted: (result: DiagnosticResult) => void;
-  onJoinVip: () => void;
+  onCompleted?: (result: DiagnosticResult) => void;
+  onJoinVip?: () => void;
 };
 
 type Option = { value: string; label: string };
@@ -109,7 +109,7 @@ const FOCUS_LABELS: Record<string, { title: string; description: string }> = {
   },
 };
 
-export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props) {
+export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props = {}) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
@@ -160,7 +160,8 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props) {
 
       const diagnosticResult = { id: data.id, foco: data.foco, nivel: data.nivel };
       setResult(diagnosticResult);
-      onCompleted(diagnosticResult);
+      window.dispatchEvent(new CustomEvent<DiagnosticResult>("s12:diagnostic", { detail: diagnosticResult }));
+      onCompleted?.(diagnosticResult);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Não foi possível concluir o diagnóstico.");
     } finally {
@@ -257,7 +258,16 @@ export default function DiagnosticoS12({ onCompleted, onJoinVip }: Props) {
               <p className="mt-4 text-sm text-zinc-500">O diagnóstico orienta sua atenção durante o PPL. A Jornada S12 oficial, com 12 desafios e checkpoints, começa somente após a matrícula na Hotmart.</p>
 
               <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
-                <button type="button" onClick={onJoinVip} className="rounded-md bg-amber-500 px-7 py-4 font-black uppercase text-zinc-950">Entrar no Grupo VIP</button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onJoinVip) onJoinVip();
+                    else window.dispatchEvent(new CustomEvent("s12:vip-open"));
+                  }}
+                  className="rounded-md bg-amber-500 px-7 py-4 font-black uppercase text-zinc-950"
+                >
+                  Entrar no Grupo VIP
+                </button>
                 <button type="button" onClick={restart} className="rounded-md border border-zinc-700 px-7 py-4 font-bold uppercase text-zinc-300">Refazer</button>
               </div>
             </div>
