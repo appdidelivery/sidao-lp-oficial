@@ -63,7 +63,7 @@ export default function GamificacaoS12({ recommendedFocus }: Props) {
   }, [recommendedFocus]);
 
   return (
-    <section id="desafios" className="py-24 bg-zinc-950 border-y border-zinc-900">
+    <section id="desafios-conteudo" className="py-24 bg-zinc-950 border-y border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-12">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-amber-500 mb-3">Depois da matrícula</p>
