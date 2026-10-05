@@ -1,22 +1,19 @@
-"use client";
-
-import React, { useState } from "react";
+import type { ReactNode } from "react";
 import { 
-  ShieldCheck, 
-  Play,
+  ShieldCheck,
   Brain, 
   Trophy,
   CheckCircle2, 
   ChevronRight,
-  Menu, // Ícone do menu mobile
-  X // Ícone para fechar o menu mobile
 } from "lucide-react";
 import Image from "next/image";
 import { SOCIAL_PROFILES } from "./site-config";
 import DiagnosticoS12 from "./diagnostico-s12";
 import GamificacaoS12 from "./gamificacao-s12";
+import AcademiaHeader from "./academy-header";
+import VipLeadModal, { VipOpenButton } from "./vip-lead";
+import YoutubeTrailer from "./youtube-trailer";
 
-const VIP_GROUP_URL = "https://chat.whatsapp.com/LBLr6YR6EP0BuDRQaQXTIU";
 const CART_OPEN = false;
 
 // --- DADOS DINÂMICOS DOS 3 CURSOS ---
@@ -49,198 +46,20 @@ const FAQS = [
   { question: "Como acesso as aulas?", answer: "Quando as inscrições abrirem e o pagamento for aprovado, você receberá as orientações de acesso à área de membros e à sequência da Jornada S12." }
 ]
 
-const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
+const SectionHeading = ({ children, subtitle }: { children: ReactNode, subtitle?: string }) => (
   <div className="text-center mb-12 md:mb-16">
     <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-white mb-4" style={{ fontFamily: 'Impact, sans-serif, system-ui' }}>{children}</h2>
     {subtitle && <p className="text-zinc-400 text-lg max-w-2xl mx-auto">{subtitle}</p>}
   </div>
 );
 
-const ButtonCTA = ({ text = "Entrar no Grupo VIP", className = "", onClick }: { text?: string; className?: string; onClick: () => void }) => (
-  <button type="button" onClick={onClick} className={`block text-center bg-gradient-to-r from-amber-600 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-zinc-950 font-bold uppercase tracking-wider rounded-sm transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(245,158,11,0.4)] ${className}`}>
-    {text}
-  </button>
-);
-
 export default function AcademiaS12LandingPage() {
-  const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
-  const [diagnosticResult, setDiagnosticResult] = useState<{ id: string; foco: string; nivel: string } | null>(null);
-
-  const handleSubmitLead = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    const data = new FormData(e.currentTarget);
-
-    try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: String(data.get("nome") || ""),
-          whatsapp: String(data.get("whatsapp") || ""),
-          perfil: String(data.get("perfil") || ""),
-          diagnosticoId: diagnosticResult?.id || "",
-          focoDiagnostico: diagnosticResult?.foco || "",
-          nivelDiagnostico: diagnosticResult?.nivel || "",
-        }),
-      });
-
-      if (response.ok) {
-        // Redirecionamento DIRETO para o Grupo VIP do WhatsApp (Link limpo)
-        const linkDoGrupoVIP = VIP_GROUP_URL; 
-        
-        window.location.href = linkDoGrupoVIP;
-      } else {
-        alert("Não conseguimos processar sua inscrição. Por favor, tente novamente.");
-        setIsSubmitting(false);
-      }
-    } catch (error) {
-      console.error("Erro ao enviar lead:", error);
-      alert("Erro de conexão. Verifique sua internet e tente novamente.");
-      setIsSubmitting(false);
-    }
-  };
-
-  const scrollToDiagnostic = () => {
-    document.getElementById("diagnostico")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-
-  const leadForm = (
-          <form onSubmit={handleSubmitLead} className="flex flex-col gap-4 text-left">
-            <div>
-              <label htmlFor="nome" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Seu Nome</label>
-              <input 
-                id="nome"
-                name="nome"
-                type="text"
-                autoComplete="name"
-                required
-                placeholder="Ex: Taffarel"
-                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
-                disabled={isSubmitting}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="whatsapp" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">WhatsApp (com DDD)</label>
-              <input 
-                id="whatsapp"
-                name="whatsapp"
-                type="tel"
-                autoComplete="tel"
-                inputMode="tel"
-                required
-                placeholder="Ex: 11 99999-9999"
-                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
-                disabled={isSubmitting}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="perfil" className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1 mb-1 block">Qual é o seu perfil?</label>
-              <select 
-                id="perfil"
-                name="perfil"
-                required
-                className="w-full bg-[#090A0F] border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none"
-                disabled={isSubmitting}
-              >
-                <option value="" disabled className="text-zinc-700">Selecione uma opção...</option>
-                <option value="Goleiro Amador">Goleiro Amador</option>
-                <option value="Atleta de Base">Atleta de Base</option>
-                <option value="Pai / Responsável">Pai / Responsável</option>
-              </select>
-              <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">Se o atleta for menor de idade, o cadastro deve ser feito pelo pai, mãe ou responsável.</p>
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 disabled:text-zinc-400 text-white font-black uppercase tracking-wider p-4 rounded transition-all mt-2 shadow-[0_0_15px_rgba(5,150,105,0.3)] hover:shadow-[0_0_25px_rgba(5,150,105,0.5)] transform hover:scale-[1.02] disabled:hover:scale-100 disabled:hover:shadow-none flex justify-center items-center"
-            >
-              {isSubmitting ? (
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              ) : "ACESSAR GRUPO VIP ➔"}
-            </button>
-          </form>
-
-  );
-
-  
   return (
     <div className="min-h-screen bg-[#090A0F] text-zinc-300 font-sans selection:bg-amber-500 selection:text-black overflow-x-hidden">
 
       
-        {isLeadFormOpen && (
-          <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 overflow-y-auto"
-            onClick={() => !isSubmitting && setIsLeadFormOpen(false)}
-          >
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="lead-form-title"
-              className="relative w-full max-w-lg rounded-2xl border border-zinc-800 bg-zinc-900 p-6 md:p-8 shadow-2xl"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <button type="button" aria-label="Fechar formulário" onClick={() => setIsLeadFormOpen(false)} disabled={isSubmitting} className="absolute right-4 top-4 text-zinc-400 hover:text-white disabled:opacity-50">
-                <X className="h-6 w-6" />
-              </button>
-              <h2 id="lead-form-title" className="mb-2 text-center text-3xl font-black uppercase text-white">Entre no <span className="text-amber-500">Grupo VIP</span></h2>
-              <p className="mb-6 text-center text-sm text-zinc-400">Preencha seus dados para receber o acesso ao grupo.</p>
-              {leadForm}
-            </div>
-          </div>
-        )}
-      
-
-      {/* HEADER FIXO E MENU MOBILE AJUSTADO */}
-      <header className="fixed top-0 w-full z-50 bg-[#090A0F]/90 backdrop-blur-md border-b border-zinc-800 transition-all">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-center z-50">
-            <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={56} sizes="(min-width: 768px) 170px, 122px" loading="eager" className="h-10 md:h-14 w-auto object-contain" />
-          </a>
-          
-          {/* Menu Desktop */}
-          <nav className="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-widest text-zinc-400 items-center">
-            <a href="#diagnostico" className="hover:text-amber-500 transition-colors">Diagnóstico</a>
-            <a href="#modulos" className="hover:text-amber-500 transition-colors">12 Semanas</a>
-            <a href="#desafios" className="hover:text-amber-500 transition-colors">Desafios</a>
-            <a href="#historia" className="hover:text-amber-500 transition-colors">O Mentor</a>
-            <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-6 text-sm ml-4" />
-          </nav>
-
-          {/* Botões Mobile (Hambúrguer + CTA Menor) */}
-          <div className="flex md:hidden items-center gap-3 z-50">
-            <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="Grupo VIP" className="py-2 px-4 text-xs" />
-            <button type="button" aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={isMobileMenuOpen} aria-controls="menu-mobile" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1">
-              {isMobileMenuOpen ? <X className="w-8 h-8 text-amber-500" /> : <Menu className="w-8 h-8" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Menu Overlay Mobile */}
-        
-          {isMobileMenuOpen && (
-            <div 
-              id="menu-mobile"
-              className="absolute top-20 left-0 w-full bg-[#090A0F] border-b border-zinc-800 flex flex-col p-6 gap-6 text-center shadow-2xl md:hidden"
-            >
-              <a href="#diagnostico" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Diagnóstico</a>
-              <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">12 Semanas</a>
-              <a href="#desafios" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Desafios</a>
-              <a href="#historia" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">O Mentor</a>
-            </div>
-          )}
-        
-      </header>
+        <VipLeadModal />
+      <AcademiaHeader />
 
       {/* HERO SECTION */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 z-10 mt-10 md:mt-0">
@@ -259,8 +78,8 @@ export default function AcademiaS12LandingPage() {
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-            <ButtonCTA onClick={scrollToDiagnostic} text="FAZER DIAGNÓSTICO S12" className="w-full sm:w-auto text-lg py-5 px-10" />
-            <button type="button" onClick={() => setIsLeadFormOpen(true)} className="w-full sm:w-auto rounded-sm border border-zinc-700 px-7 py-5 text-sm font-bold uppercase tracking-wider text-zinc-300 hover:border-amber-500 hover:text-amber-400 transition-colors">Entrar direto no Grupo VIP</button>
+            <a href="#diagnostico" className="block w-full rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 px-10 py-5 text-center text-lg font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.4)] sm:w-auto">FAZER DIAGNÓSTICO S12</a>
+            <VipOpenButton text="Entrar direto no Grupo VIP" className="w-full rounded-sm border border-zinc-700 px-7 py-5 text-sm font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-amber-500 hover:text-amber-400 sm:w-auto" />
           </div>
           <p className="text-sm text-zinc-500 flex items-center justify-center md:justify-start gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-500" /> 7 perguntas · foco inicial · nível Essencial ou Base/Performance
@@ -292,37 +111,11 @@ export default function AcademiaS12LandingPage() {
         </div>
 
         <div className="flex-1 w-full relative">
-          <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl">
-            
-            {isTrailerPlaying ? (
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube-nocookie.com/embed/P4EKAeaEC-U?autoplay=1&rel=0"
-                title="Trailer Oficial - Academia S12"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <button
-                type="button"
-                onClick={() => setIsTrailerPlaying(true)}
-                aria-label="Reproduzir trailer da Academia S12"
-                className="absolute inset-0 w-full h-full flex items-center justify-center bg-cover bg-center group"
-                style={{ backgroundImage: "url(https://i.ytimg.com/vi/P4EKAeaEC-U/hqdefault.jpg)" }}
-              >
-                <span className="flex items-center justify-center w-20 h-14 rounded-xl bg-red-600 text-white shadow-xl group-hover:bg-red-500 transition-colors">
-                  <Play className="w-8 h-8 fill-current" aria-hidden="true" />
-                </span>
-              </button>
-            )}
-          </div>
+          <YoutubeTrailer />
         </div>
       </section>
 
-      <DiagnosticoS12
-        onCompleted={(result) => setDiagnosticResult(result)}
-        onJoinVip={() => setIsLeadFormOpen(true)}
-      />
+      <DiagnosticoS12 />
 
       {/* SELEÇÃO DINÂMICA DE CURSOS */}
       <section id="cursos" className="py-20 bg-zinc-950 border-t border-zinc-900 relative">
@@ -384,7 +177,7 @@ export default function AcademiaS12LandingPage() {
         </div>
       </section>
 
-      <GamificacaoS12 recommendedFocus={diagnosticResult?.foco || null} />
+      <GamificacaoS12 />
 
       {/* REELS / CONTEÚDO DINÂMICO - VERSÃO RETENÇÃO DE LEAD */}
       <section className="py-20 bg-[#090A0F] border-y border-zinc-900">
@@ -513,7 +306,7 @@ export default function AcademiaS12LandingPage() {
                   </div>
                 )}
                 <p className="text-amber-400 font-bold mb-6">Inscrições em breve. Entre no grupo VIP para receber as novidades.</p>
-                <ButtonCTA onClick={() => setIsLeadFormOpen(true)} text="ENTRAR NO GRUPO VIP" className="w-full text-lg py-5" />
+                <VipOpenButton text="ENTRAR NO GRUPO VIP" className="w-full rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 py-5 text-lg font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.4)]" />
               </div>
             </div>
           </div>
