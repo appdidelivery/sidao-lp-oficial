@@ -11,8 +11,7 @@ import { SOCIAL_PROFILES } from "./site-config";
 import DeferredDiagnosticoS12 from "./deferred-diagnostico-s12";
 import DeferredGamificacaoS12 from "./deferred-gamificacao-s12";
 import AcademiaHeader from "./academy-header";
-import VipLeadModal, { VipOpenButton } from "./vip-lead";
-import YoutubeTrailer from "./youtube-trailer";
+import VipLeadModal from "./vip-lead";
 
 const CART_OPEN = false;
 
@@ -79,7 +78,7 @@ export default function AcademiaS12LandingPage() {
           
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
             <a href="#diagnostico" className="block w-full rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 px-10 py-5 text-center text-lg font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.4)] sm:w-auto">FAZER DIAGNÓSTICO S12</a>
-            <VipOpenButton text="Entrar direto no Grupo VIP" className="w-full rounded-sm border border-zinc-700 px-7 py-5 text-sm font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-amber-500 hover:text-amber-400 sm:w-auto" />
+            <button type="button" data-s12-vip-open className="w-full rounded-sm border border-zinc-700 px-7 py-5 text-sm font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-amber-500 hover:text-amber-400 sm:w-auto">Entrar direto no Grupo VIP</button>
           </div>
           <p className="text-sm text-zinc-500 flex items-center justify-center md:justify-start gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-500" /> 7 perguntas · foco inicial · nível Essencial ou Base/Performance
@@ -111,7 +110,17 @@ export default function AcademiaS12LandingPage() {
         </div>
 
         <div className="flex-1 w-full relative">
-          <YoutubeTrailer />
+          <div className="relative aspect-video overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl">
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              src="/video academia s12 institucionasidao.mp4"
+              poster="/thumb-1.webp"
+              aria-label="Trailer oficial da Academia S12"
+              controls
+              preload="none"
+              playsInline
+            />
+          </div>
         </div>
       </section>
 
@@ -306,7 +315,7 @@ export default function AcademiaS12LandingPage() {
                   </div>
                 )}
                 <p className="text-amber-400 font-bold mb-6">Inscrições em breve. Entre no grupo VIP para receber as novidades.</p>
-                <VipOpenButton text="ENTRAR NO GRUPO VIP" className="w-full rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 py-5 text-lg font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.4)]" />
+                <button type="button" data-s12-vip-open className="w-full rounded-sm bg-gradient-to-r from-amber-600 to-amber-400 py-5 text-lg font-bold uppercase tracking-wider text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.4)]">ENTRAR NO GRUPO VIP</button>
               </div>
             </div>
           </div>
