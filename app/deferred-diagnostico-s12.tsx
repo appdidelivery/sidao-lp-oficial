@@ -31,5 +31,5 @@ export default function DeferredDiagnosticoS12() {
     return () => observer.disconnect();
   }, [ready]);
 
-  return <div ref={root}>{ready ? <DiagnosticoS12 /> : <div className="min-h-[520px] bg-[#090A0F]" aria-hidden="true" />}</div>;
+  return <div id="diagnostico" ref={root} className="scroll-mt-24">{ready ? <DiagnosticoS12 /> : <div className="min-h-[520px] bg-[#090A0F]" aria-hidden="true" />}</div>;
 }
