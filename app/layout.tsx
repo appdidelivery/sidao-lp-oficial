@@ -35,6 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link rel="preload" as="image" href="/thumb-1.webp" type="image/webp" />
+      </head>
       <body className="font-sans">{children}</body>
       {/* Injetando o GTM otimizado */}        <Script id="academia-s12-gtm" strategy="lazyOnload">{`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
