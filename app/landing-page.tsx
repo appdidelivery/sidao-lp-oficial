@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { 
   ShieldCheck, 
   Play,
@@ -207,9 +206,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       <div className="min-h-screen bg-[#090A0F] text-zinc-300 flex flex-col items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
         
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }} 
-          animate={{ opacity: 1, scale: 1 }} 
+        <div 
           className="bg-zinc-900/80 border border-zinc-800 p-8 rounded-2xl max-w-lg w-full text-center z-10 shadow-2xl backdrop-blur-sm"
         >
           <Image src="/logo-horizontal.jpeg" alt="Academia S12" width={240} height={48} className="h-12 w-auto mx-auto mb-6 object-contain" />
@@ -233,7 +230,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               className={`w-full bg-transparent border-b ${passwordError ? 'border-red-500' : 'border-zinc-800'} p-2 text-center text-xs text-zinc-500 focus:outline-none focus:border-amber-500 focus:text-white transition-colors`}
             />
           </form>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -242,23 +239,17 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
   return (
     <div className="min-h-screen bg-[#090A0F] text-zinc-300 font-sans selection:bg-amber-500 selection:text-black overflow-x-hidden">
 
-      <AnimatePresence>
+      
         {isLeadFormOpen && (
-          <motion.div
+          <div
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 overflow-y-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onClick={() => !isSubmitting && setIsLeadFormOpen(false)}
           >
-            <motion.div
+            <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="lead-form-title"
               className="relative w-full max-w-lg rounded-2xl border border-zinc-800 bg-zinc-900 p-6 md:p-8 shadow-2xl"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
               onClick={(event) => event.stopPropagation()}
             >
               <button type="button" aria-label="Fechar formulário" onClick={() => setIsLeadFormOpen(false)} disabled={isSubmitting} className="absolute right-4 top-4 text-zinc-400 hover:text-white disabled:opacity-50">
@@ -267,10 +258,10 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               <h2 id="lead-form-title" className="mb-2 text-center text-3xl font-black uppercase text-white">Entre no <span className="text-amber-500">Grupo VIP</span></h2>
               <p className="mb-6 text-center text-sm text-zinc-400">Preencha seus dados para receber o acesso ao grupo.</p>
               {leadForm}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      
 
       {/* HEADER FIXO E MENU MOBILE AJUSTADO */}
       <header className="fixed top-0 w-full z-50 bg-[#090A0F]/90 backdrop-blur-md border-b border-zinc-800 transition-all">
@@ -298,29 +289,26 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
         </div>
 
         {/* Menu Overlay Mobile */}
-        <AnimatePresence>
+        
           {isMobileMenuOpen && (
-            <motion.div 
+            <div 
               id="menu-mobile"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
               className="absolute top-20 left-0 w-full bg-[#090A0F] border-b border-zinc-800 flex flex-col p-6 gap-6 text-center shadow-2xl md:hidden"
             >
               <a href="#diagnostico" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Diagnóstico</a>
               <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">12 Semanas</a>
               <a href="#desafios" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">Desafios</a>
               <a href="#historia" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold uppercase text-white hover:text-amber-500">O Mentor</a>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+        
       </header>
 
       {/* HERO SECTION */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 z-10 mt-10 md:mt-0">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-        <motion.div initial={false} className="flex-1 space-y-6 text-center md:text-left">
+        <div className="flex-1 space-y-6 text-center md:text-left">
           <div className="inline-block border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
             Jornada S12 · técnica, leitura e blindagem mental
           </div>
@@ -363,9 +351,9 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                </a>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div initial={false} className="flex-1 w-full relative">
+        <div className="flex-1 w-full relative">
           <div className="relative aspect-video bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl">
             
             {isTrailerPlaying ? (
@@ -390,7 +378,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
               </button>
             )}
           </div>
-        </motion.div>
+        </div>
       </section>
 
       <DiagnosticoS12
@@ -407,7 +395,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
           <div className="grid grid-cols-1 max-w-3xl mx-auto gap-6 cursor-pointer">
             {COURSES_DATA.map((item, idx) => (
-              <motion.div 
+              <div 
                 key={idx}
                 id={item.anchor}
                 onClick={() => {
@@ -425,7 +413,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 <div className={`mt-8 block w-full text-center py-3 px-4 font-bold uppercase text-sm rounded transition-colors duration-300 ${activeCourse === idx ? 'bg-amber-500 text-zinc-950' : 'border border-amber-500/50 text-amber-400 hover:bg-amber-500 hover:text-zinc-950'}`}>
                   {activeCourse === idx ? 'Jornada selecionada' : 'Ver aplicação da Jornada'}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -442,11 +430,8 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
 
           <div className="space-y-4">
             {currentCourse.modules.map((mod, idx) => (
-              <motion.div 
+              <div 
                 key={`${currentCourse.id}-${idx}`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
                 className="bg-zinc-900/80 border border-zinc-800 rounded-sm overflow-hidden"
               >
                 <div className="p-4 md:p-6 flex items-center border-b border-zinc-800/50 bg-[#090A0F]">
@@ -463,7 +448,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                     ))}
                   </ul>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -519,7 +504,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
       {/* STORYTELLING - QUEM É O MENTOR */}
       <section id="historia" className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="flex-1 w-full">
+          <div className="flex-1 w-full">
             <div className="relative">
               <h2 className="absolute -top-10 -left-4 text-7xl md:text-9xl font-black text-zinc-800/30 uppercase z-0 select-none" style={{ fontFamily: 'Impact' }}>SIDÃO</h2>
               <div className="relative z-10 border-4 border-zinc-900 rounded-sm overflow-hidden shadow-2xl">
@@ -532,9 +517,9 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                  <div className="absolute inset-0 bg-gradient-to-t from-[#090A0F] via-transparent to-transparent"></div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex-1 space-y-6">
+          <div className="flex-1 space-y-6">
             <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight" style={{ fontFamily: 'Impact' }}>
               QUEM É <span className="text-amber-500">SIDÃO?</span>
             </h2>
@@ -560,7 +545,7 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                 <p className="text-sm font-bold uppercase text-zinc-500">Prática Direta</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -631,13 +616,13 @@ export default function AcademiaS12LandingPage({ unlocked }: { unlocked: boolean
                   {faq.question}
                   <ChevronDown className={`w-5 h-5 text-amber-500 transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
                 </button>
-                <AnimatePresence>
+                
                   {openFaq === idx && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-6 text-zinc-400 pb-4 leading-relaxed">
+                    <div className="px-6 text-zinc-400 pb-4 leading-relaxed">
                       {faq.answer}
-                    </motion.div>
+                    </div>
                   )}
-                </AnimatePresence>
+                
               </div>
             ))}
           </div>
